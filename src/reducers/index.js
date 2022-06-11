@@ -60,16 +60,16 @@ export default (
         },
       },
       {
-        name: "Approve",
-        path: "/approve",
+        name: "User",
+        path: "/user",
         meta: {
           icon: "bx bx-table",
         },
         routes: [
           {
-            name: "Anonymous",
-            path: "/anonymous",
-            component: require("../pages/approve/anonymous").default,
+            name: "User",
+            path: "/user",
+            component: require("../pages/user/user").default,
             meta: {
               icon: "bx bx-id-card",
             },
@@ -77,7 +77,7 @@ export default (
           {
             name: "Report-Admin",
             path: "/report-admin",
-            component: require("../pages/approve/reportadmin").default,
+            component: require("../pages/user/reportadmin").default,
             meta: {
               icon: "bx bxs-report",
             },
@@ -85,7 +85,7 @@ export default (
           {
             name: "Report-Mod",
             path: "/report-mod",
-            component: require("../pages/approve/report-mod").default,
+            component: require("../pages/user/report-mod").default,
             meta: {
               icon: "bx bxs-report",
             },

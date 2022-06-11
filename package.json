@@ -7,6 +7,7 @@
     "antd": "^4.17.3",
     "axios": "^0.24.0",
     "boxicons": "^2.1.1",
+    "caniuse-lite": "^1.0.30001352",
     "chart.js": "^3.6.2",
     "cra-template": "1.1.2",
     "moment": "^2.29.1",
