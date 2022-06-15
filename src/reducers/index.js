@@ -158,6 +158,31 @@ export default (
           icon: "bx bxs-group",
         },
       },
+      {
+        name: "Bill",
+        path: "/bill",
+        meta: {
+          icon: "bx bx-receipt",
+        },
+        routes: [
+          {
+            name: "Bill",
+            path: "/bill",
+            component: require("../pages/bill/bill").default,
+            meta: {
+              icon: "bx bx-receipt",
+            },
+          },
+        ],
+      },
+            {
+        name: "Voucher",
+        path: "/voucher",
+        component: require("../pages/voucher/voucher").default,
+        meta: {
+          icon: "bx bxs-discount",
+        },
+      },
     ],
     menus: null,
     routes: null,

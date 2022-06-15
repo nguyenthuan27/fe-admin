@@ -11,7 +11,7 @@ const ReportAdmin = () => {
   useEffect(() => {
   }, []);
   const columns = [
-  
+
   ];
   return (
     <Row className="subject-default">
@@ -28,7 +28,7 @@ const ReportAdmin = () => {
                     <Input
                       placeholder="Tên"
                       onChange={(e) => {
-                        
+
                       }}
                     />
                   </Form.Item>
@@ -36,7 +36,7 @@ const ReportAdmin = () => {
                     <Input
                       placeholder="Email"
                       onChange={(e) => {
-                        
+
                       }}
                     />
                   </Form.Item>
