@@ -17,7 +17,6 @@ const CreateBill = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-
   useEffect(() => {}, []);
   return (
     <>
