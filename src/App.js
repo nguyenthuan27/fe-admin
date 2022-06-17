@@ -11,6 +11,7 @@ import "./App.scss";
 const { Header, Sider, Content } = Layout;
 const store = createStore(reducers);
 const routes = store.getState().base;
+         
 
 const App = (props) => {
   let currentPaths = props.location.pathname.split("/").slice(1);
