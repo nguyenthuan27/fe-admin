@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
-import CreateUser from "../../component/modal/user/create";
-import EditUser from "../../component/modal/user/edit";
+import CreateUser from "../../component/modal/products/create";
+import EditUser from "../../component/modal/products/edit";
 const { Panel } = Collapse;
-const UserManager = () => {
+const ProductsrManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -16,29 +16,14 @@ const UserManager = () => {
     key: 'id',
 },
 {
-    title: 'Full Name',
-    dataIndex: 'full_name',
-    key: 'full_name',
+    title: 'Group id',
+    dataIndex: 'group_id',
+    key: 'group_id',
 },
 {
-    title: 'Account',
-    dataIndex: 'account',
-    key: 'account',
-},
-{
-    title: 'Password',
-    dataIndex: 'password',
-    key: 'password',
-},
-{
-    title: 'Mobile Phone',
-    dataIndex: 'mobile_phone',
-    key: 'mobile_phone',
-},
-{
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
+    title: 'Product name',
+    dataIndex: 'product_name',
+    key: 'product_name',
 },
 {
     title: 'Create date',
@@ -51,14 +36,14 @@ const UserManager = () => {
     key: 'status',
 },
 {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender',
+    title: 'Quantity',
+    dataIndex: 'quantity',
+    key: 'quantity',
 },
 {
-    title: 'Enable Notification',
-    dataIndex: 'enable_notification',
-    key: 'enable_notification',
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
 },
 
 {
@@ -78,11 +63,12 @@ const UserManager = () => {
 const data = [
   {
       key: '1',
-      id: '1',
-      full_name: 'Cao Anh Quan',
-      email: 'quancaoanh789@gmail.com',
-      mobile_phone: '0392087387',
+      group_id: '1',
+      group_name: 'Quan',
       create_date: '16-06-2022',
+      status: 'Bình Thường',
+      quantity: 15,
+      price: '100,000',
       tags: ['nice', 'developer'],
   },
 ];
@@ -141,4 +127,4 @@ const data = [
     </>
   );
 };
-export default UserManager;
+export default ProductsrManager;
