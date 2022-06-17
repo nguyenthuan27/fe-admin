@@ -86,7 +86,6 @@ const data = [
       tags: ['nice', 'developer'],
   },
 ];
-
   return (
     <>
       <Row className="subject-default">
@@ -103,7 +102,7 @@ const data = [
                       <Input placeholder="Full Name" onChange={(e) => {}} />
                     </Form.Item>
                     <Form.Item label="Email">
-                      <Input placeholder="Email" onChange={(e) => {}} />
+                      <Input placeholder="Email" onChange={(e) => { }} />
                     </Form.Item>
                   </Col>
                 </Row>
