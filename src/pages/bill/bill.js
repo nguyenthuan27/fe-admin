@@ -94,7 +94,7 @@ const BillManager = () => {
     const data = [
         {
             key: '1',
-            customer_id: 'John',
+            customer_id: 'John1',
             lastName: 'Brown',
             age: 32,
             address: 'New York No. 1 Lake Park',
