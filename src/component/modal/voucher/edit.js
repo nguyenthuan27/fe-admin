@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Input, InputNumber, Modal, Row, Col } from "antd";
 const EditVoucher = (props) => {
+
     const { isVisible, setIsVisible } = props;
     const layout = {
         labelCol: { span: 20 },

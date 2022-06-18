@@ -33,134 +33,111 @@ const CreateVoucher = (props) => {
                     {...layout}
                     name="nest-messages"
                     onFinish={onFinish}
-                    layout="vertical"
                     validateMessages={validateMessages}
                 >
-                    <Row gutter={{
-                        xs: 8,
-                        sm: 16,
-                        md: 24,
-                        lg: 59
-                    }} justify="left">
-                        <Col>
-                            <Form.Item
-                                name={["bill", "id"]}
-                                label="Id"
-                                rules={[{ required: true, type: "number" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "release_id"]}
-                                label="Release"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
+                    <Form.Item
+                        name={["bill", "id"]}
+                        label="Id"
+                        rules={[{ required: true, type: "number" }]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                        <Col>
-                            <Form.Item
-                                name={["bill", "voucher_name"]}
-                                label="Voucher name"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "voucher_code"]}
-                                label="Voucher code"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "note"]}
-                                label="Note"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "discount"]}
-                                label="Discount"
-                                rules={[{ required: true, type: "number" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "type"]}
-                                label="Type"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "points_to_receive"]}
-                                label="Points to receive"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "maximum_discount"]}
-                                label="Maximum discount"
-                                rules={[{ required: true, type: "number" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "payment_type"]}
-                                label="Payment type"
-                                rules={[{ required: true, type: "number" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "minimum_bill"]}
-                                label="Minimum bill"
-                                rules={[{ required: true, type: "number" }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "create_date"]}
-                                label="Create date"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col>
-                            <Form.Item
-                                name={["bill", "status"]}
-                                label="Status"
-                                rules={[{ required: true }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                    <Form.Item
+                        name={["bill", "release_id"]}
+                        label="Release"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "voucher_name"]}
+                        label="Voucher name"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "voucher_code"]}
+                        label="Voucher code"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "note"]}
+                        label="Note"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "discount"]}
+                        label="Discount"
+                        rules={[{ required: true, type: "number" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "type"]}
+                        label="Type"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "points_to_receive"]}
+                        label="Points to receive"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "maximum_discount"]}
+                        label="Maximum discount"
+                        rules={[{ required: true, type: "number" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "payment_type"]}
+                        label="Payment type"
+                        rules={[{ required: true, type: "number" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "minimum_bill"]}
+                        label="Minimum bill"
+                        rules={[{ required: true, type: "number" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "create_date"]}
+                        label="Create date"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name={["bill", "status"]}
+                        label="Status"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>
                         <Button type="primary" htmlType="submit">
                             Submit
