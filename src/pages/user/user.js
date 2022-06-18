@@ -8,7 +8,8 @@ const UserManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {}, []);
+
+  useEffect(() => { }, []);
   const columns = [
     {
       title: "Id",
@@ -89,6 +90,7 @@ const UserManager = () => {
       tags: ["nice", "developer"],
     },
   ];
+  useEffect(() => { }, []);
   return (
     <>
       <Row className="subject-default">
@@ -102,10 +104,13 @@ const UserManager = () => {
                 <Row span={24} className="subject-filter">
                   <Col span={5} className="filter">
                     <Form.Item label="Full Name" style={{ paddingRight: 20 }}>
-                      <Input placeholder="Full Name" onChange={(e) => {}} />
+                      <Input placeholder="Full Name" onChange={(e) => { }} />
+                      <Form.Item label="Tên" style={{ paddingRight: 20 }}>
+                        <Input placeholder="Tên" onChange={(e) => { }} />
+                      </Form.Item>
                     </Form.Item>
                     <Form.Item label="Email">
-                      <Input placeholder="Email" onChange={(e) => {}} />
+                      <Input placeholder="Email" onChange={(e) => { }} />
                     </Form.Item>
                   </Col>
                 </Row>
