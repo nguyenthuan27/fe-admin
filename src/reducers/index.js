@@ -108,9 +108,9 @@ export default (
             },
           },
           {
-            name: "Subject",
-            path: "/subject",
-            component: require("../pages/manage/subject").default,
+            name: "Sales",
+            path: "/sales",
+            component: require("../pages/manage/sales").default,
             meta: {
               icon: "bx bxs-edit-alt",
             },
