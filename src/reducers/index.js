@@ -100,9 +100,9 @@ export default (
         },
         routes: [
           {
-            name: "Post",
-            path: "/post",
-            component: require("../pages/manage/posts").default,
+            name: "Products",
+            path: "/products",
+            component: require("../pages/manage/products").default,
             meta: {
               icon: "bx bxs-file-plus",
             },
@@ -175,7 +175,7 @@ export default (
           },
         ],
       },
-            {
+      {
         name: "Voucher",
         path: "/voucher",
         component: require("../pages/voucher/voucher").default,

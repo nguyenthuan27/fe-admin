@@ -16,7 +16,7 @@ const Posts = () => {
   return (
     <Row className="subject-default">
       <Col span={24} className="title">
-        Quản lý Post
+        Quản lý Product
       </Col>
       <Col span={24} className="subject-search">
         <Form layout="vertical" autoComplete="off">

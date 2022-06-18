@@ -116,14 +116,6 @@ const data = [
           />
         </Col>
       </Row>
-      <CreateVoucher
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-            />
-            <EditVoucher
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
-            />
     </>
   );
 };
