@@ -176,6 +176,31 @@ export default (
         ],
       },
       {
+        name: "Shift",
+        path: "/shift",
+        meta: {
+          icon: "bx bx-receipt",
+        },
+        routes: [
+          {
+            name: "Shift",
+            path: "/shift",
+            component: require("../pages/shift/shift").default,
+            meta: {
+              icon: "bx bx-receipt",
+            },
+          },
+          {
+            name: "Shift-staff",
+            path: "/shift-staff",
+            component: require("../pages/shift/shift-staff").default,
+            meta: {
+              icon: "bx bx-receipt",
+            },
+          },
+        ],
+      },
+      {
         name: "Voucher",
         path: "/voucher",
         component: require("../pages/voucher/voucher").default,
