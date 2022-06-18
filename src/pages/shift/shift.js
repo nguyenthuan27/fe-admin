@@ -79,7 +79,7 @@ const ShiftManager = () => {
     const data = [
         {
             key: '1',
-            customer_id: 'John1',
+            customer_id: 'John',
             lastName: 'Brown',
             age: 32,
             address: 'New York No. 1 Lake Park',
