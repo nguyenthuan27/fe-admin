@@ -90,7 +90,6 @@ const UserManager = () => {
       tags: ["nice", "developer"],
     },
   ];
-  useEffect(() => { }, []);
   return (
     <>
       <Row className="subject-default">
