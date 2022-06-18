@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Modal } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Space, Row, Col } from "antd";
 const CreateBill = (props) => {
   const { isVisible, setIsVisible } = props;
   const layout = {
-    labelCol: { span: 7 },
-    wrapperCol: { span: 16 },
+    labelCol: { span: 20 },
+    wrapperCol: { span: 24 },
   };
   const onFinish = () => {};
   const validateMessages = {
@@ -17,6 +17,7 @@ const CreateBill = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
+
   useEffect(() => {}, []);
   return (
     <>
@@ -31,111 +32,142 @@ const CreateBill = (props) => {
           {...layout}
           name="nest-messages"
           onFinish={onFinish}
+          layout="vertical"
           validateMessages={validateMessages}
         >
-          <Form.Item
-            name={["bill", "customer_id"]}
-            label="Customer"
-            rules={[{ required: true }]}
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 59,
+            }}
+            justify="left"
           >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "customer_id"]}
+                label="Customer"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "voucher_id"]}
+                label="Voucher"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "voucher_id"]}
-            label="Voucher"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "staff_id"]}
+                label="Staff"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "type"]}
+                label="Type"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "staff_id"]}
-            label="Staff"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "address"]}
+                label="Address"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "ship_price"]}
+                label="Ship price"
+                rules={[{ required: true, type: "number" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "type"]}
-            label="Type"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "bill_code"]}
+                label="Bill code"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "amount"]}
+                label="Amount"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "address"]}
-            label="Address"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "total_price"]}
+                label="Total price"
+                rules={[{ required: true, type: "number" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "price_after_voucher"]}
+                label="Price after voucher"
+                rules={[{ required: true, type: "number" }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "ship_price"]}
-            label="Ship price"
-            rules={[{ required: true, type: "number" }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "create_date"]}
+                label="Create date"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item
+                name={["bill", "update_date"]}
+                label="Update date"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
 
-          <Form.Item
-            name={["bill", "bill_code"]}
-            label="Bill code"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "amount"]}
-            label="Amount"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "total_price"]}
-            label="Total price"
-            rules={[{ required: true, type: "number" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "price_after_voucher"]}
-            label="Price after voucher"
-            rules={[{ required: true, type: "number" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "create_date"]}
-            label="Create date"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "update_date"]}
-            label="Update date"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["bill", "state"]}
-            label="State"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Col>
+              <Form.Item
+                name={["bill", "state"]}
+                label="State"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>
             <Button type="primary" htmlType="submit">
