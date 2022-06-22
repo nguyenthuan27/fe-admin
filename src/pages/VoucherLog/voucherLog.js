@@ -1,101 +1,89 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
-import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
-import CreateUser from "../../component/modal/user/create";
-import EditUser from "../../component/modal/user/edit";
+import CreateVoucherLog from "../../component/modal/voucherLog/create";
+import EditVoucherLog from "../../component/modal/voucherLog/edit";
 const { Panel } = Collapse;
-const UserManager = () => {
+const VoucherLogrManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const { Option } = Select;
   useEffect(() => {}, []);
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Full Name",
-      dataIndex: "full_name",
-      key: "full_name",
-    },
-    {
-      title: "Account",
-      dataIndex: "account",
-      key: "account",
-    },
-    {
-      title: "Password",
-      dataIndex: "password",
-      key: "password",
-    },
-    {
-      title: "Mobile Phone",
-      dataIndex: "mobile_phone",
-      key: "mobile_phone",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Create date",
-      dataIndex: "create_date",
-      key: "create_date",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
-      title: "Gender",
-      dataIndex: "gender",
-      key: "gender",
-    },
-    {
-      title: "Enable Notification",
-      dataIndex: "enable_notification",
-      key: "enable_notification",
-    },
+  const columns = [{
+    title: 'Id',
+    dataIndex: 'id',
+    key: 'id',
+},
+{
+    title: 'Bill id',
+    dataIndex: 'bill_id',
+    key: 'bill_id',
+},
+{
+    title: 'Voucher id',
+    dataIndex: 'voucher_id',
+    key: 'voucher_id',
+},
+{
+    title: 'Customer id',
+    dataIndex: 'customer_id',
+    key: 'customer_id',
+},
+{
+    title: 'Before price',
+    dataIndex: 'before_price',
+    key: 'before_price',
+},
+{
+    title: 'After price',
+    dataIndex: 'after_price',
+    key: 'after_price',
+},
+{
+    title: 'Discount price',
+    dataIndex: 'discount_price',
+    key: 'discount_price',
+},
+{
+    title: 'Create date',
+    dataIndex: 'create_date',
+    key: 'create_date',
+},
 
-    {
-      title: "Action",
-      key: "action",
-      render: () => (
+{
+    title: 'Action',
+    key: 'action',
+    render: () => (
         <Space size="middle">
-          <a onClick={() => setIsVisibleEdit(true)}>
-            <EditTwoTone />
-            Edit
-          </a>
-          <a>
-            <DeleteOutlined />
-            Delete
-          </a>
+            <a onClick={() => setIsVisibleEdit(true)}>
+                <EditTwoTone />Edit
+            </a>
+            <a>
+                <DeleteOutlined />Delete</a>
         </Space>
-      ),
-    },
-  ];
-  const data = [
-    {
-      key: "1",
-      id: "1",
-      full_name: "Cao Anh Quan",
-      email: "quancaoanh789@gmail.com",
-      mobile_phone: "0392087387",
-      create_date: "16-06-2022",
-      tags: ["nice", "developer"],
-    },
-  ];
+    ),
+},
+];
+const data = [
+  {
+      key: '1',
+      group_id: '1',
+      group_name: 'Quan',
+      create_date: '16-06-2022',
+      status: 'Bình Thường',
+      quantity: 15,
+      price: '100,000',
+      tags: ['nice', 'developer'],
+  },
+];
+
   return (
     <>
       <Row className="subject-default">
         <Col span={24} className="title">
-          Quản lý User
+          Quản lý Voucher Log
         </Col>
         <Col span={24} className="subject-search">
           <Form layout="vertical" autoComplete="off">
@@ -145,15 +133,15 @@ const UserManager = () => {
           />
         </Col>
       </Row>
-      <CreateUser
+      <CreateVoucherLog
                 setIsVisible={setIsVisibleCreate}
                 isVisible={isVisibleCreate}
-        />
-            <EditUser
+            />
+            <EditVoucherLog
                 isVisible={isVisibleEdit}
                 setIsVisible={setIsVisibleEdit}
             />
     </>
   );
 };
-export default UserManager;
+export default VoucherLogManager;
