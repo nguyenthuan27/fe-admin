@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
+import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
-import CreateUser from "../../component/modal/products/create";
-import EditUser from "../../component/modal/products/edit";
+import CreateProduct from "../../component/modal/products/create";
+import EditProduct from "../../component/modal/products/edit";
 const { Panel } = Collapse;
 const ProductsrManager = () => {
   const [loading, setLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const [isVisibleCreate, setIsVisibleCreate] = useState(false);
+  const [isVisibleEdit, setIsVisibleEdit] = useState(false);
+  const { Option } = Select;
   useEffect(() => {}, []);
   const columns = [{
     title: 'Id',
@@ -98,10 +99,21 @@ const data = [
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-          <Button onClick={() => setIsVisible(true)} type="primary ">
-            Thêm mới
-          </Button>
-        </Col>
+                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+                        Thêm mới
+                    </Button>
+                    <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
+                        <Select
+                            defaultValue="Sort filter"
+                            style={{
+                                width: 100,
+                            }}
+                        >
+                            <Option value="10">10</Option>
+                            <Option value="15">15</Option>
+                        </Select>
+                    </Col>
+                </Col>
 
         <Col span={24}>
           <Table
@@ -116,6 +128,14 @@ const data = [
           />
         </Col>
       </Row>
+      <CreateProduct
+                setIsVisible={setIsVisibleCreate}
+                isVisible={isVisibleCreate}
+            />
+            <EditProduct
+                isVisible={isVisibleEdit}
+                setIsVisible={setIsVisibleEdit}
+            />
     </>
   );
 };
