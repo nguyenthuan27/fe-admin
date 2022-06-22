@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
+import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
 import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
-import CreateUser from "../../component/modal/user/create";
-import EditUser from "../../component/modal/user/edit";
+import UserModal from "../../component/modal/userInfor";
 const { Panel } = Collapse;
 const UserManager = () => {
   const [loading, setLoading] = useState(false);
-  const [isVisibleCreate, setIsVisibleCreate] = useState(false);
-  const [isVisibleEdit, setIsVisibleEdit] = useState(false);
-  const { Option } = Select;
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {}, []);
   const columns = [
     {
@@ -68,7 +66,7 @@ const UserManager = () => {
       key: "action",
       render: () => (
         <Space size="middle">
-          <a onClick={() => setIsVisibleEdit(true)}>
+          <a onClick={() => setIsVisible(true)}>
             <EditTwoTone />
             Edit
           </a>
@@ -116,21 +114,10 @@ const UserManager = () => {
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
-                        Thêm mới
-                    </Button>
-                    <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
-                        <Select
-                            defaultValue="Sort filter"
-                            style={{
-                                width: 100,
-                            }}
-                        >
-                            <Option value="10">10</Option>
-                            <Option value="15">15</Option>
-                        </Select>
-                    </Col>
-                </Col>
+          <Button onClick={() => setIsVisible(true)} type="primary ">
+            Thêm mới
+          </Button>
+        </Col>
 
         <Col span={24}>
           <Table
@@ -145,14 +132,7 @@ const UserManager = () => {
           />
         </Col>
       </Row>
-      <CreateUser
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-        />
-            <EditUser
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
-            />
+      <UserModal setIsVisible={setIsVisible} isVisible={isVisible} />
     </>
   );
 };
