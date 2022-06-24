@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import api from "../../api/approve";
-import { getRole } from "../../utils/fpoly";
 import * as moment from "moment";
 const { Panel } = Collapse;
 
