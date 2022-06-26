@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import "./users.scss";
+import "./products.scss";
 import CreateUser from "../../component/modal/products/create";
 import EditUser from "../../component/modal/products/edit";
 const { Panel } = Collapse;
