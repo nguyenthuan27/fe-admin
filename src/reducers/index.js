@@ -151,6 +151,30 @@ export default (
         ],
       },
       {
+        name: "Products",
+        path: "/products",
+        component: require("../pages/products/products").default,
+        meta: {
+          icon: "bx bxs-edit-alt",
+        },
+      },
+      {
+        name: "VoucherLog",
+        path: "/voucherLog",
+        component: require("../pages/VoucherLog/voucherLog").default,
+        meta: {
+          icon: "bx bxs-edit-alt",
+        },
+      },
+      {
+        name: "Staff",
+        path: "/staff",
+        component: require("../pages/Staff/staff").default,
+        meta: {
+          icon: "bx bxs-edit-alt",
+        },
+      },
+      {
         name: "Permission",
         path: "/permission",
         component: require("../pages/permission/index").default,
