@@ -7,6 +7,13 @@ const { Panel } = Collapse;
 const ShiftManager = () => {
     const [loading, setLoading] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+import CreateBill from "../../component/modal/shift/create";
+import EditBill from "../../component/modal/shift/edit";
+const { Panel } = Collapse;
+const ShiftManager = () => {
+    const [loading, setLoading] = useState(false);
+    const [isVisibleCreate, setIsVisibleCreate] = useState(false);
+    const [isVisibleEdit, setIsVisibleEdit] = useState(false);
     const { Option } = Select;
     useEffect(() => { }, []);
     const columns = [
@@ -66,6 +73,7 @@ const ShiftManager = () => {
             render: () => (
                 <Space size="middle">
                     <a onClick={() => setIsVisible(true)}>
+                    <a onClick={() => setIsVisibleEdit(true)}>
                         <EditTwoTone />Edit
                     </a>
                     <a>
@@ -110,6 +118,7 @@ const ShiftManager = () => {
                 </Col>
                 <Col span={24} className="btn-create">
                     <Button onClick={() => setIsVisible(true)} type="primary ">
+                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
                         Create
                     </Button>
                     <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
@@ -142,6 +151,13 @@ const ShiftManager = () => {
             <ShiftModal
                 setIsVisible={setIsVisible}
                 isVisible={isVisible}
+            <CreateBill
+                setIsVisible={setIsVisibleCreate}
+                isVisible={isVisibleCreate}
+            />
+            <EditBill
+                isVisible={isVisibleEdit}
+                setIsVisible={setIsVisibleEdit}
             />
         </>
     );

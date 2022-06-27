@@ -10,6 +10,7 @@ const StaffManager = () => {
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const { Option } = Select;
+
   useEffect(() => { }, []);
   const columns = [{
     title: 'Id',
@@ -52,7 +53,43 @@ const StaffManager = () => {
       tags: ['nice', 'developer'],
     },
   ];
+},
+{
+    title: 'User id',
+    dataIndex: 'user_id',
+    key: 'user_id',
+},
+{
+    title: 'Role',
+    dataIndex: 'role',
+    key: 'role',
+},
 
+
+{
+    title: 'Action',
+    key: 'action',
+    render: () => (
+        <Space size="middle">
+            <a onClick={() => setIsVisibleEdit(true)}>
+                <EditTwoTone />Edit
+            </a>
+            <a>
+                <DeleteOutlined />Delete</a>
+        </Space>
+    ),
+},
+];
+const data = [
+    {
+        key: '1',
+        customer_id: 'John',
+        lastName: 'Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+        tags: ['nice', 'developer'],
+    },
+];
   return (
     <>
       <Row className="subject-default">
@@ -70,6 +107,10 @@ const StaffManager = () => {
                     </Form.Item>
                     <Form.Item label="Role">
                       <Input placeholder="Role" onChange={(e) => { }} />
+                      <Input placeholder="User id" onChange={(e) => {}} />
+                    </Form.Item>
+                    <Form.Item label="Role">
+                      <Input placeholder="Role" onChange={(e) => {}} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -93,7 +134,21 @@ const StaffManager = () => {
             </Select>
           </Col>
         </Col>
-
+                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+                        Thêm mới
+                    </Button>
+                    <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
+                        <Select
+                            defaultValue="Sort filter"
+                            style={{
+                                width: 100,
+                            }}
+                        >
+                            <Option value="10">10</Option>
+                            <Option value="15">15</Option>
+                        </Select>
+                    </Col>
+                </Col>
         <Col span={24}>
           <Table
             dataSource={""}
@@ -115,6 +170,13 @@ const StaffManager = () => {
         isVisible={isVisibleEdit}
         setIsVisible={setIsVisibleEdit}
       />
+                setIsVisible={setIsVisibleCreate}
+                isVisible={isVisibleCreate}
+            />
+            <EditStaff
+                isVisible={isVisibleEdit}
+                setIsVisible={setIsVisibleEdit}
+            />
     </>
   );
 };
