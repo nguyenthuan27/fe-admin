@@ -10,48 +10,48 @@ const StaffManager = () => {
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const { Option } = Select;
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const columns = [{
     title: 'Id',
     dataIndex: 'id',
     key: 'id',
-},
-{
+  },
+  {
     title: 'User id',
     dataIndex: 'user_id',
     key: 'user_id',
-},
-{
+  },
+  {
     title: 'Role',
     dataIndex: 'role',
     key: 'role',
-},
+  },
 
 
-{
+  {
     title: 'Action',
     key: 'action',
     render: () => (
-        <Space size="middle">
-            <a onClick={() => setIsVisibleEdit(true)}>
-                <EditTwoTone />Edit
-            </a>
-            <a>
-                <DeleteOutlined />Delete</a>
-        </Space>
+      <Space size="middle">
+        <a onClick={() => setIsVisibleEdit(true)}>
+          <EditTwoTone />Edit
+        </a>
+        <a>
+          <DeleteOutlined />Delete</a>
+      </Space>
     ),
-},
-];
-const data = [
+  },
+  ];
+  const data = [
     {
-        key: '1',
-        customer_id: 'John',
-        lastName: 'Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
+      key: '1',
+      customer_id: 'John',
+      lastName: 'Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
     },
-];
+  ];
 
   return (
     <>
@@ -66,10 +66,10 @@ const data = [
                 <Row span={24} className="subject-filter">
                   <Col span={5} className="filter">
                     <Form.Item label="User id" style={{ paddingRight: 20 }}>
-                      <Input placeholder="User id" onChange={(e) => {}} />
+                      <Input placeholder="User id" onChange={(e) => { }} />
                     </Form.Item>
                     <Form.Item label="Role">
-                      <Input placeholder="Role" onChange={(e) => {}} />
+                      <Input placeholder="Role" onChange={(e) => { }} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -78,21 +78,21 @@ const data = [
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
-                        Thêm mới
-                    </Button>
-                    <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
-                        <Select
-                            defaultValue="Sort filter"
-                            style={{
-                                width: 100,
-                            }}
-                        >
-                            <Option value="10">10</Option>
-                            <Option value="15">15</Option>
-                        </Select>
-                    </Col>
-                </Col>
+          <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+            Thêm mới
+          </Button>
+          <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
+            <Select
+              defaultValue="Sort filter"
+              style={{
+                width: 100,
+              }}
+            >
+              <Option value="10">10</Option>
+              <Option value="15">15</Option>
+            </Select>
+          </Col>
+        </Col>
 
         <Col span={24}>
           <Table
@@ -108,13 +108,13 @@ const data = [
         </Col>
       </Row>
       <CreateStaff
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-            />
-            <EditStaff
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
-            />
+        setIsVisible={setIsVisibleCreate}
+        isVisible={isVisibleCreate}
+      />
+      <EditStaff
+        isVisible={isVisibleEdit}
+        setIsVisible={setIsVisibleEdit}
+      />
     </>
   );
 };
