@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
-import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
-import "./products.scss";
-import CreateUser from "../../component/modal/products/create";
-import EditUser from "../../component/modal/products/edit";
+import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
+import "./voucherLog.scss";
+import CreateVoucherLog from "../../component/modal/voucherLog/create";
+import EditVoucherLog from "../../component/modal/voucherLog/edit";
 const { Panel } = Collapse;
-const ProductsrManager = () => {
+const VoucherLogManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
@@ -17,34 +17,39 @@ const ProductsrManager = () => {
     key: 'id',
 },
 {
-    title: 'Group id',
-    dataIndex: 'group_id',
-    key: 'group_id',
+    title: 'Bill id',
+    dataIndex: 'bill_id',
+    key: 'bill_id',
 },
 {
-    title: 'Product name',
-    dataIndex: 'product_name',
-    key: 'product_name',
+    title: 'Voucher id',
+    dataIndex: 'voucher_id',
+    key: 'voucher_id',
+},
+{
+    title: 'Customer id',
+    dataIndex: 'customer_id',
+    key: 'customer_id',
+},
+{
+    title: 'Before price',
+    dataIndex: 'before_price',
+    key: 'before_price',
+},
+{
+    title: 'After price',
+    dataIndex: 'after_price',
+    key: 'after_price',
+},
+{
+    title: 'Discount price',
+    dataIndex: 'discount_price',
+    key: 'discount_price',
 },
 {
     title: 'Create date',
     dataIndex: 'create_date',
     key: 'create_date',
-},
-{
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-},
-{
-    title: 'Quantity',
-    dataIndex: 'quantity',
-    key: 'quantity',
-},
-{
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
 },
 
 {
@@ -64,12 +69,10 @@ const ProductsrManager = () => {
 const data = [
   {
       key: '1',
-      group_id: '1',
-      group_name: 'Quan',
-      create_date: '16-06-2022',
-      status: 'Bình Thường',
-      quantity: 15,
-      price: '100,000',
+      customer_id: 'John',
+      lastName: 'Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
   },
 ];
@@ -78,7 +81,7 @@ const data = [
     <>
       <Row className="subject-default">
         <Col span={24} className="title">
-          Quản lý User
+          Quản lý Voucher Log
         </Col>
         <Col span={24} className="subject-search">
           <Form layout="vertical" autoComplete="off">
@@ -128,7 +131,15 @@ const data = [
           />
         </Col>
       </Row>
+      <CreateVoucherLog
+                setIsVisible={setIsVisibleCreate}
+                isVisible={isVisibleCreate}
+            />
+            <EditVoucherLog
+                isVisible={isVisibleEdit}
+                setIsVisible={setIsVisibleEdit}
+            />
     </>
   );
 };
-export default ProductsrManager;
+export default VoucherLogManager;

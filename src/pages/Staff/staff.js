@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
-import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
-import "./products.scss";
-import CreateUser from "../../component/modal/products/create";
-import EditUser from "../../component/modal/products/edit";
+import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
+import "./staff.scss";
+import CreateStaff from "../../component/modal/staff/create";
+import EditStaff from "../../component/modal/staff/edit";
 const { Panel } = Collapse;
-const ProductsrManager = () => {
+const StaffManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
@@ -17,35 +17,16 @@ const ProductsrManager = () => {
     key: 'id',
 },
 {
-    title: 'Group id',
-    dataIndex: 'group_id',
-    key: 'group_id',
+    title: 'User id',
+    dataIndex: 'user_id',
+    key: 'user_id',
 },
 {
-    title: 'Product name',
-    dataIndex: 'product_name',
-    key: 'product_name',
+    title: 'Role',
+    dataIndex: 'role',
+    key: 'role',
 },
-{
-    title: 'Create date',
-    dataIndex: 'create_date',
-    key: 'create_date',
-},
-{
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-},
-{
-    title: 'Quantity',
-    dataIndex: 'quantity',
-    key: 'quantity',
-},
-{
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
-},
+
 
 {
     title: 'Action',
@@ -62,23 +43,21 @@ const ProductsrManager = () => {
 },
 ];
 const data = [
-  {
-      key: '1',
-      group_id: '1',
-      group_name: 'Quan',
-      create_date: '16-06-2022',
-      status: 'Bình Thường',
-      quantity: 15,
-      price: '100,000',
-      tags: ['nice', 'developer'],
-  },
+    {
+        key: '1',
+        customer_id: 'John',
+        lastName: 'Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+        tags: ['nice', 'developer'],
+    },
 ];
 
   return (
     <>
       <Row className="subject-default">
         <Col span={24} className="title">
-          Quản lý User
+          Quản lý Staff
         </Col>
         <Col span={24} className="subject-search">
           <Form layout="vertical" autoComplete="off">
@@ -86,11 +65,11 @@ const data = [
               <Panel header="Tìm" key="1">
                 <Row span={24} className="subject-filter">
                   <Col span={5} className="filter">
-                    <Form.Item label="Full Name" style={{ paddingRight: 20 }}>
-                      <Input placeholder="Full Name" onChange={(e) => {}} />
+                    <Form.Item label="User id" style={{ paddingRight: 20 }}>
+                      <Input placeholder="User id" onChange={(e) => {}} />
                     </Form.Item>
-                    <Form.Item label="Email">
-                      <Input placeholder="Email" onChange={(e) => {}} />
+                    <Form.Item label="Role">
+                      <Input placeholder="Role" onChange={(e) => {}} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -128,7 +107,15 @@ const data = [
           />
         </Col>
       </Row>
+      <CreateStaff
+                setIsVisible={setIsVisibleCreate}
+                isVisible={isVisibleCreate}
+            />
+            <EditStaff
+                isVisible={isVisibleEdit}
+                setIsVisible={setIsVisibleEdit}
+            />
     </>
   );
 };
-export default ProductsrManager;
+export default StaffManager;
