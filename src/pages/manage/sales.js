@@ -11,10 +11,12 @@ import {
   Select,
   Tabs,
 } from "antd";
+import SalesModal from "../../component/modal/salesInfo";
 import { SearchOutlined, PlusSquareOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Option } = Select;
 const { TabPane } = Tabs;
+const { TextArea } = Input;
 const Sales = () => {
   const initialPanes = [
     { title: "Đơn hàng  1", content: "Content of Tab 1", key: "1" },
@@ -64,38 +66,36 @@ const Sales = () => {
     }
   };
   const layout = {
-    labelCol: { span: 8 },
+    labelCol: {
+      span: 12,
+    },
   };
-  const onFinish = () => {};
+  const [isVisible, setIsVisible] = useState(false);
+
+  const onFinish = () => { };
   return (
-    <Row className="subject-default">
-      <Col span={24} className="title">
-        Bán hàng tại quầy
-      </Col>
-      <Col span={24}>
-        <Button type="primary">
-          <i class="bx bx-plus"></i>
-          <span>Thêm mới</span>
-        </Button>
-      </Col>
-      <Col span={24} className="subject-search">
-        <Form layout="vertical" autoComplete="off">
-          <Collapse>
-            <Panel header="Tìm" key="1">
-              <Row span={24} className="subject-filter">
-                <Col span={5}>
-                  <Form.Item label="Tên môn học">
-                    <Input placeholder="Tên môn học" onChange={(e) => {}} />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Panel>
-          </Collapse>
-        </Form>
-      </Col>
-      <Col span={24}>
-        <Row className="d-flex justify-content-space-between ">
-          <Col span={14} className="action-order">
+    <>
+      <Row className="subject-default">
+        <Col span={24} className="title">
+          Bán hàng tại quầy
+        </Col>
+        <Col span={24} className="subject-search">
+          <Form layout="vertical" autoComplete="off">
+            <Collapse>
+              <Panel header="Tìm" key="1">
+                <Row span={24} className="subject-filter">
+                  <Col span={5}>
+                    <Form.Item label="Tên môn học">
+                      <Input placeholder="Tên môn học" onChange={(e) => { }} />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Panel>
+            </Collapse>
+          </Form>
+        </Col>
+        <Col span={24}>
+          <Row className="d-flex justify-content-space-between ">
             <Tabs
               type="editable-card"
               onChange={onChange}
@@ -112,108 +112,101 @@ const Sales = () => {
                 </TabPane>
               ))}
             </Tabs>
-          </Col>
-          <Col span={9} className="payment">
-            <Form {...layout} name="nest-messages" onFinish={onFinish}>
-              <Form.Item
-                name="gender"
-                label="Nhân viên"
-                rules={[{ required: true }]}
-              >
-                <Select
-                  style={{
-                    width: "calc(38%)",
-                  }}
-                  placeholder="Select a option and change input text above"
-                  // onChange={onGenderChange}
-                  allowClear
-                >
-                  <Option value="1">thuan</Option>
-                  <Option value="2">ngo</Option>
-                  <Option value="3">binh</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="gender"
-                label="Khách hàng"
-                rules={[{ required: true }]}
-              >
-                <div
-                  className="select-user"
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                >
-                  <Input placeholder="input text above" />
-                  <div className="search">
-                    <SearchOutlined />
-                  </div>
-                  <div className="create-user">
-                    <PlusSquareOutlined />
-                  </div>
-                </div>
-              </Form.Item>
-              <Form.Item name="amount" label="Số lượng sản phẩm">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="amount" label="Tổng tiền hàng">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="amount" label="Giảm giá">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="amount" label="Tổng tiền cần thanh toán">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="amount" label="Số tiền khách trả">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="amount" label="Số tiền trả lại cho khách">
-                <Input
-                  style={{
-                    width: "calc(60%)",
-                  }}
-                />
-              </Form.Item>
-              <Form.Item name="radio-group" label="Phương thức thanh toán">
-                <Radio.Group>
-                  <Radio value="a">Tiền mặt</Radio>
-                  <Radio value="b">Chuyển khoản</Radio>
-                  <Radio value="c">Thẻ</Radio>
-                </Radio.Group>
-              </Form.Item>
-              <Form.Item>
-                <div className="btn-pay">
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
-                </div>
-              </Form.Item>
-            </Form>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+            <Col span={9} className="payment">
+              <Col span={18} className="title">
+                <Form {...layout} name="nest-messages" onFinish={onFinish}>
+                  <Form.Item
+                    name="gender"
+                    label=""
+                    labelAlign="left"
+                    rules={[{ required: true }]}
+                  >
+                    <Select
+                      style={{
+                        width: "calc(38%)",
+                      }}
+                      placeholder="Select a option and change input text above"
+                      // onChange={onGenderChange}
+                      allowClear
+                    >
+                      <Option value="1">thuan</Option>
+                      <Option value="2">ngo</Option>
+                      <Option value="3">binh</Option>
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="gender"
+                    label=""
+                    rules={[{ required: true }]}
+                  >
+                    <div
+                      className="select-user"
+                      style={{
+                        width: "calc(60%)",
+                      }}
+                    >
+                      <Input placeholder="input text above" />
+                      <div className="search">
+                        <SearchOutlined />
+                      </div>
+                      <div className="create-user">
+                        <PlusSquareOutlined onClick={() => setIsVisible(true)} />
+                      </div>
+                    </div>
+                  </Form.Item>
+                  <Form.Item name="amount" label="Tổng tiền hàng">
+                    <Input
+                      style={{
+                        width: "calc(60%)",
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item name="amount" label="Giảm giá">
+                    <Input
+                      style={{
+                        width: "calc(60%)",
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item name="amount" label="Tổng tiền cần thanh toán">
+                  </Form.Item>
+                  <Form.Item name="amount" label="Khách thanh toán">
+                    <Input
+                      style={{
+                        width: "calc(60%)",
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item name="text-arena">
+                    <TextArea rows={3} style={{ width: "calc(140%)" }} />
+                  </Form.Item>
+                  <br />
+                  <br />
+                  <Form.Item name="radio-group" label="">
+                    <Radio.Group>
+                      <Radio value="a">Tiền mặt</Radio>
+                      <Radio value="b">Chuyển khoản</Radio>
+                      <Radio value="c">Thẻ</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item>
+                    <div className="btn-pay">
+                      <Button type="primary" htmlType="submit">
+                        Submit
+                      </Button>
+                    </div>
+                  </Form.Item>
+                </Form>
+              </Col>
+            </Col>
+          </Row >
+        </Col >
+      </Row >
+      <SalesModal
+        setIsVisible={setIsVisible}
+        isVisible={isVisible}
+      />
+    </>
   );
 };
 export default Sales;
