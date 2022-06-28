@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
 import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./shift.scss";
-import CreateBill from "../../component/modal/shift_staff/create";
-import EditBill from "../../component/modal/shift_staff/edit";
+import ShiftStaffModal from "../../component/modal/shiftStaffInfo";
 const { Panel } = Collapse;
 const ShiftManager = () => {
     const [loading, setLoading] = useState(false);
-    const [isVisibleCreate, setIsVisibleCreate] = useState(false);
-    const [isVisibleEdit, setIsVisibleEdit] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const { Option } = Select;
     useEffect(() => { }, []);
     const columns = [
@@ -57,7 +55,7 @@ const ShiftManager = () => {
             key: 'action',
             render: () => (
                 <Space size="middle">
-                    <a onClick={() => setIsVisibleEdit(true)}>
+                    <a onClick={() => setIsVisible(true)}>
                         <EditTwoTone />Edit
                     </a>
                     <a>
@@ -101,7 +99,7 @@ const ShiftManager = () => {
                     </Form>
                 </Col>
                 <Col span={24} className="btn-create">
-                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+                    <Button onClick={() => setIsVisible(true)} type="primary ">
                         Create
                     </Button>
                     <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
@@ -131,13 +129,9 @@ const ShiftManager = () => {
                     />
                 </Col>
             </Row>
-            <CreateBill
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-            />
-            <EditBill
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
+            <ShiftStaffModal
+                setIsVisible={setIsVisible}
+                isVisible={isVisible}
             />
         </>
     );
