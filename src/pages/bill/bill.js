@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
 import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./bill.scss";
-import CreateBill from "../../component/modal/bill/create";
-import EditBill from "../../component/modal/bill/edit";
+import BillModal from "../../component/modal/billInfo";
 const { Panel } = Collapse;
 const BillManager = () => {
     const [loading, setLoading] = useState(false);
-    const [isVisibleCreate, setIsVisibleCreate] = useState(false);
-    const [isVisibleEdit, setIsVisibleEdit] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const { Option } = Select;
     useEffect(() => { }, []);
     const columns = [
@@ -82,7 +80,7 @@ const BillManager = () => {
             key: 'action',
             render: () => (
                 <Space size="middle">
-                    <a onClick={() => setIsVisibleEdit(true)}>
+                    <a onClick={() => setIsVisible(true)}>
                         <EditTwoTone />Edit
                     </a>
                     <a>
@@ -129,7 +127,7 @@ const BillManager = () => {
                     </Form>
                 </Col>
                 <Col span={24} className="btn-create">
-                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+                    <Button onClick={() => setIsVisible(true)} type="primary ">
                         Thêm mới
                     </Button>
                     <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
@@ -159,13 +157,9 @@ const BillManager = () => {
                     />
                 </Col>
             </Row>
-            <CreateBill
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-            />
-            <EditBill
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
+            <BillModal
+                setIsVisible={setIsVisible}
+                isVisible={isVisible}
             />
         </>
     );
