@@ -133,9 +133,10 @@ export default (
         },
         routes: [
           {
-            name: "Notes",
-            path: "/notes",
-            component: require("../pages/option-product/notes").default,
+            name: "Productvariant",
+            path: "/productvariant",
+            component: require("../pages/option-product/productvariant")
+              .default,
             meta: {
               icon: "bx bx-book-bookmark",
             },

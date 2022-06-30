@@ -115,4 +115,29 @@ export default {
     });
     return res.data;
   },
+
+  ///Product variant
+  getListProductVariant: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/productvariant/get`,
+    });
+    return res.data;
+  },
+  createProductVariant: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/productvariant/create`,
+      data: data,
+    });
+    return res.data;
+  },
+  updateProductVariant: async (data) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/productvariant/update`,
+      data: data,
+    });
+    return res.data;
+  },
 };
