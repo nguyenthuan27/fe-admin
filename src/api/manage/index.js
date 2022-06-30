@@ -57,10 +57,10 @@ export default {
     return res.data;
   },
   getListVoucherRelease: async () => {
-     const res = await customAxios({
-       method: "get",
-       url: `${serverEndpoint}/shoeswear/voucherRelease/list`,
-     });
-     return res.data;
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/voucherRelease/list`,
+    });
+    return res.data;
   }
 };

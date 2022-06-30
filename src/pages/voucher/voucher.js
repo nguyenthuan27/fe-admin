@@ -140,7 +140,7 @@ const VoucherManager = () => {
                       <Input
                         style={{ width: "100px" }}
                         placeholder="Voucher name"
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                       />
                     </Form.Item>
                     <Form.Item
@@ -150,7 +150,7 @@ const VoucherManager = () => {
                       <Input
                         style={{ width: "100px" }}
                         placeholder="Voucher code"
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                       />
                     </Form.Item>
                   </Col>
