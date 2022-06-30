@@ -62,5 +62,16 @@ export default {
        url: `${serverEndpoint}/shoeswear/voucherRelease/list`,
      });
      return res.data;
+  },
+
+
+  /// Product
+  getListProduct: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/product/getlistproductall`,
+    });
+    return res.data;
   }
+  
 };
