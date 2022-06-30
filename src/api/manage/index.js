@@ -45,15 +45,15 @@ export default {
     const res = await customAxios({
       method: "post",
       url: `${serverEndpoint}/shoeswear/voucher/update`,
-      data: data
+      data: data,
     });
     return res.data;
   },
   deleteVoucher: async (idVoucher) => {
     const res = await customAxios({
       method: "post",
-      url: `${serverEndpoint}/shoeswear/voucher/delete?id=${idVoucher}`
-    })
+      url: `${serverEndpoint}/shoeswear/voucher/delete?id=${idVoucher}`,
+    });
     return res.data;
   },
   getListVoucherRelease: async () => {
@@ -64,7 +64,6 @@ export default {
     return res.data;
   },
 
-
   /// Product
   getListProduct: async () => {
     const res = await customAxios({
@@ -72,6 +71,48 @@ export default {
       url: `${serverEndpoint}/shoeswear/product/getlistproductall`,
     });
     return res.data;
-  }
-  
+  },
+  // Option Product
+  getListOptionProduct: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/option/get`,
+    });
+    return res.data;
+  },
+
+  createOptionProduct: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/option/create`,
+      data: data,
+    });
+    return res.data;
+  },
+  updateOptionProduct: async (data) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/option/update`,
+      data: data,
+    });
+    return res.data;
+  },
+
+  updateOptionValueProduct: async (data) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/optionvalue/update`,
+      data: data,
+    });
+    return res.data;
+  },
+
+  createOptionValueProduct: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/optionvalue/create`,
+      data: data,
+    });
+    return res.data;
+  },
 };

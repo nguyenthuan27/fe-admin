@@ -126,8 +126,8 @@ export default (
         ],
       },
       {
-        name: "Tool",
-        path: "/tool",
+        name: "Option-Product",
+        path: "/option-product",
         meta: {
           icon: "bx bxs-wrench",
         },
@@ -135,15 +135,15 @@ export default (
           {
             name: "Notes",
             path: "/notes",
-            component: require("../pages/tool/notes").default,
+            component: require("../pages/option-product/notes").default,
             meta: {
               icon: "bx bx-book-bookmark",
             },
           },
           {
-            name: "Board",
-            path: "/board",
-            component: require("../pages/tool/board").default,
+            name: "Option",
+            path: "/option",
+            component: require("../pages/option-product/option").default,
             meta: {
               icon: "bx bx-detail",
             },
