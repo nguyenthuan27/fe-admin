@@ -12,54 +12,111 @@ import {
 } from "antd";
 import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./products.scss";
+import API from "../../api/manage";
+import ProductModal from "../../component/modal/products/productModal";
 const { Panel } = Collapse;
+
 const ProductsrManager = () => {
   const [loading, setLoading] = useState(false);
+  const [isVisibleModal, setIsVisibleModal] = useState({
+    type: false,
+    action: "create",
+  });
+  const [listProduct, setListProduct] = useState([]);
+
   const { Option } = Select;
-  useEffect(() => {}, []);
+  const getProducts = async () => {
+    const data = await API.getListProduct();
+    setListProduct(data.result.listproductall);
+  };
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   const columns = [
     {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Group id",
-      dataIndex: "group_id",
-      key: "group_id",
+      title: "productid",
+      dataIndex: "productid",
+      key: "productid",
     },
     {
       title: "Product name",
-      dataIndex: "product_name",
-      key: "product_name",
+      dataIndex: "productname",
+      key: "productname",
     },
     {
-      title: "Create date",
-      dataIndex: "create_date",
-      key: "create_date",
+      title: "fromprice",
+      dataIndex: "fromprice",
+      key: "fromprice",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: "toprice",
+      dataIndex: "toprice",
+      key: "toprice",
     },
     {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
+      title: "Size",
+      render: (text, record) => (
+        <div className="d-flex align-items-center ">
+          {record.list[0].data
+            .find((item) => item.option_name === "Size")
+            .datadetail.map((item) => (
+              <div className="d-flex align-items-center justify-content-center option-product">
+                <span>{item.option_value_name}</span>
+              </div>
+            ))}
+        </div>
+      ),
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
+      title: "Color",
+      render: (text, record) => (
+        <div className="d-flex align-items-center ">
+          {record.list[0].data
+            .find((item) => item.option_name === "Color")
+            .datadetail?.map((item) => (
+              <div
+                className="d-flex align-items-center justify-content-center option-product"
+                style={{ backgroundColor: item.option_value_name }}
+              ></div>
+            ))}
+        </div>
+      ),
+    },
+    {
+      title: "Material",
+      render: (text, record) => (
+        <div className="d-flex align-items-center ">
+          {record.list[0].data
+            ?.find((item) => item.option_name === "Material")
+            ?.datadetail?.map((item) => (
+              <div className="d-flex align-items-center justify-content-center option-product">
+                <span>{item.option_value_name}</span>
+              </div>
+            ))}
+        </div>
+      ),
     },
 
     {
+      title: "note",
+      dataIndex: "note",
+      key: "note",
+    },
+    {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (text, record) => (
         <Space size="middle">
-          <a >
+          <a
+            onClick={() =>
+              setIsVisibleModal({
+                type: true,
+                action: "edit",
+                id: record.productid,
+              })
+            }
+          >
             <EditTwoTone />
             Edit
           </a>
@@ -97,7 +154,10 @@ const ProductsrManager = () => {
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-          <Button type="primary ">
+          <Button
+            onClick={() => setIsVisibleModal({ type: true, action: "create" })}
+            type="primary "
+          >
             Thêm mới
           </Button>
           <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
@@ -115,7 +175,7 @@ const ProductsrManager = () => {
 
         <Col span={24}>
           <Table
-            dataSource={""}
+            dataSource={listProduct}
             columns={columns}
             loading={loading}
             pagination={{
@@ -126,6 +186,12 @@ const ProductsrManager = () => {
           />
         </Col>
       </Row>
+      <ProductModal
+        listProduct={listProduct}
+        setIsVisible={setIsVisibleModal}
+        isVisible={isVisibleModal}
+        getProducts={getProducts}
+      />
     </>
   );
 };
