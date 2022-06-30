@@ -1,39 +1,14 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
-import { ApiFilled, DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
 import UserModal from "../../component/modal/userInfor";
-import API from "../../api/manage/user";
-import toast, { Toaster } from "react-hot-toast";
 const { Panel } = Collapse;
 const UserManager = () => {
   const [loading, setLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState({
-    type: false,
-    action: "create",
-  });
+  const [isVisible, setIsVisible] = useState(false);
 
-  const [user, setUser] = useState("");
-
-  const getListUser = async () => {
-    let data = await API.getListUser();
-    const listUser = data.result.filter((item) => item.status == true);
-    setUser(listUser);
-  };
-
-  const deleteUser = async (idUser) => {
-    let data = await API.deleteUser(idUser);
-    if (data.message === "SUCCESS") {
-      toast.success(data.message);
-    } else {
-      toast.error(data.message);
-    }
-    getListUser();
-  };
-
-  useEffect(() => {
-    getListUser();
-  }, []);
+  useEffect(() => {}, []);
   const columns = [
     {
       title: "Id",
@@ -42,8 +17,8 @@ const UserManager = () => {
     },
     {
       title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
+      dataIndex: "full_name",
+      key: "full_name",
     },
     {
       title: "Account",
@@ -57,8 +32,8 @@ const UserManager = () => {
     },
     {
       title: "Mobile Phone",
-      dataIndex: "mobilePhone",
-      key: "mobilePhone",
+      dataIndex: "mobile_phone",
+      key: "mobile_phone",
     },
     {
       title: "Email",
@@ -67,8 +42,8 @@ const UserManager = () => {
     },
     {
       title: "Create date",
-      dataIndex: "createDate",
-      key: "createDate",
+      dataIndex: "create_date",
+      key: "create_date",
     },
     {
       title: "Status",
@@ -89,16 +64,13 @@ const UserManager = () => {
     {
       title: "Action",
       key: "action",
-      render: (record) => (
+      render: () => (
         <Space size="middle">
-          <a onClick={() => setIsVisible({
-            type: true, action: "edit", id: record.id
-          })
-          }>
+          <a onClick={() => setIsVisible(true)}>
             <EditTwoTone />
             Edit
           </a>
-          <a onClick={() => deleteUser(record.id)}>
+          <a>
             <DeleteOutlined />
             Delete
           </a>
@@ -106,9 +78,19 @@ const UserManager = () => {
       ),
     },
   ];
+  const data = [
+    {
+      key: "1",
+      id: "1",
+      full_name: "Cao Anh Quan",
+      email: "quancaoanh789@gmail.com",
+      mobile_phone: "0392087387",
+      create_date: "16-06-2022",
+      tags: ["nice", "developer"],
+    },
+  ];
   return (
     <>
-      <Toaster toastOptions={{ position: "top-center" }} />
       <Row className="subject-default">
         <Col span={24} className="title">
           Quản lý User
@@ -120,10 +102,10 @@ const UserManager = () => {
                 <Row span={24} className="subject-filter">
                   <Col span={5} className="filter">
                     <Form.Item label="Full Name" style={{ paddingRight: 20 }}>
-                      <Input placeholder="Full Name" onChange={(e) => { }} />
+                      <Input placeholder="Full Name" onChange={(e) => {}} />
                     </Form.Item>
                     <Form.Item label="Email">
-                      <Input placeholder="Email" onChange={(e) => { }} />
+                      <Input placeholder="Email" onChange={(e) => {}} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -132,31 +114,25 @@ const UserManager = () => {
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-          <Button onClick={() => setIsVisible({ type: true, action: "create" })} type="primary ">
+          <Button onClick={() => setIsVisible(true)} type="primary ">
             Thêm mới
           </Button>
         </Col>
 
         <Col span={24}>
           <Table
-            dataSource={user}
+            dataSource={""}
             columns={columns}
             loading={loading}
             pagination={{
-              pageSize: 5,
+              pageSize: 10,
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${total} items`,
             }}
           />
         </Col>
       </Row>
-      <UserModal
-        getListUser={getListUser}
-        user={user}
-        setUser={setUser}
-        setIsVisible={setIsVisible}
-        isVisible={isVisible}
-      />
+      <UserModal setIsVisible={setIsVisible} isVisible={isVisible} />
     </>
   );
 };
