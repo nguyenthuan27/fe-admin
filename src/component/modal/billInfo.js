@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { Button, Form, Input, InputNumber, Modal, Space, Row, Col } from "antd";
 const BillModal = (props) => {
   const { isVisible, setIsVisible } = props;
+  const { isVisible, setIsVisible, listBill, getListBill } = props;
+  const [form] = Form.useForm();
   const layout = {
     labelCol: { span: 20 },
     wrapperCol: { span: 24 },
   };
   const onFinish = () => { };
+  const onFinish = (value) => {
+    console.log(value);
+  };
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -18,6 +23,23 @@ const BillModal = (props) => {
     },
   };
   useEffect(() => { }, []);
+  useEffect(() => {
+    let listData = listBill || [];
+    const bills = listData?.find((item) => item.bill_id == isVisible?.id) || [];
+    form.setFieldsValue({
+      // address: bills.address,
+      // amount: bills.amount,
+      // bill_code: bills.bill_code,
+      // customer_id: bills.customer?.customer_name,
+      // ship_price: "ytry",
+      // staff_id: "ytry",
+      // state: "ytry",
+      // total_price: bills.total_price,
+      // type: "ytryt",
+      // update_date: "ytry",
+      // voucher_id: "ytry",
+    });
+  }, [isVisible.type]);
   return (
     <>
       <Modal
@@ -25,6 +47,8 @@ const BillModal = (props) => {
         centered
         visible={isVisible}
         onCancel={() => setIsVisible(false)}
+        visible={isVisible.type}
+        onCancel={() => setIsVisible({ type: false, action: isVisible.action })}
         footer={null}
       >
         <Form
@@ -40,6 +64,15 @@ const BillModal = (props) => {
             md: 24,
             lg: 59
           }} justify="left">
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 59,
+            }}
+            justify="left"
+          >
             <Col>
               <Form.Item
                 name={["bill", "customer_id"]}
@@ -92,6 +125,7 @@ const BillModal = (props) => {
                 name={["bill", "ship_price"]}
                 label="Ship price"
                 rules={[{ required: true, type: "number" }]}
+                rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
@@ -121,6 +155,7 @@ const BillModal = (props) => {
                 name={["bill", "total_price"]}
                 label="Total price"
                 rules={[{ required: true, type: "number" }]}
+                rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
@@ -130,6 +165,7 @@ const BillModal = (props) => {
                 name={["bill", "price_after_voucher"]}
                 label="Price after voucher"
                 rules={[{ required: true, type: "number" }]}
+                rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
@@ -179,6 +215,7 @@ const BillModal = (props) => {
           </Form.Item>
         </Form>
       </Modal >
+      </Modal>
     </>
   );
 };
