@@ -140,4 +140,38 @@ export default {
     });
     return res.data;
   },
+  //Get list user
+  getListUser: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/user/list`,
+    });
+    return res.data;
+  },
+  //Create user
+  createUser: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      data: data,
+      url: `${serverEndpoint}/shoeswear/user/create`,
+    });
+    return res.data;
+  },
+  //Update user 
+  updateUser: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      data: data,
+      url: `${serverEndpoint}/shoeswear/user/update`,
+    });
+    return res.data;
+  },
+  //Delete user
+  deleteUser: async (idUser) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/user/delete?id=${idUser}`,
+    });
+    return res.data;
+  },
 };
