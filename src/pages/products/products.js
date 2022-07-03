@@ -14,6 +14,7 @@ import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./products.scss";
 import API from "../../api/manage";
 import ProductModal from "../../component/modal/products/productModal";
+import AddOptionProductModal from "../../component/modal/products/addOptionProductModal";
 const { Panel } = Collapse;
 
 const ProductsrManager = () => {
@@ -22,6 +23,10 @@ const ProductsrManager = () => {
     type: false,
     action: "create",
   });
+  const [isOpenModal, setIsOpenModal] = useState({
+    type: false,
+  });
+
   const [listProduct, setListProduct] = useState([]);
 
   const { Option } = Select;
@@ -124,6 +129,17 @@ const ProductsrManager = () => {
             <DeleteOutlined />
             Delete
           </a>
+          <Button
+            type="primary"
+            onClick={() =>
+              setIsOpenModal({
+                type: true,
+                id: record.productid,
+              })
+            }
+          >
+            Add Option
+          </Button>
         </Space>
       ),
     },
@@ -191,6 +207,11 @@ const ProductsrManager = () => {
         setIsVisible={setIsVisibleModal}
         isVisible={isVisibleModal}
         getProducts={getProducts}
+      />
+      <AddOptionProductModal
+        listProduct={listProduct}
+        isOpenModal={isOpenModal}
+        setIsOpenModal={setIsOpenModal}
       />
     </>
   );
