@@ -4,22 +4,22 @@ import Icon from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Breadcrumb, Layout, Menu, Popover } from "antd";
 import { withRouter } from "react-router-dom";
+import { store } from "./redux/store";
 import { createStore } from "redux";
 import reducers from "./reducers";
 import "./App.scss";
 import toast, { Toaster } from "react-hot-toast";
-
+import { Provider } from 'react-redux'
 const { Header, Sider, Content } = Layout;
-const store = createStore(reducers);
-const routes = store.getState().base;
-         
+const stores = createStore(reducers);
+const routes = stores.getState().base;
 
 const App = (props) => {
   let currentPaths = props.location.pathname.split("/").slice(1);
   currentPaths = currentPaths.map((i) =>
     i.replace(/^\S/, (s) => s.toUpperCase())
   );
-  store.dispatch(generateMenus());
+  stores.dispatch(generateMenus());
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState(currentPaths);
   useEffect(
@@ -56,7 +56,7 @@ const App = (props) => {
   const logout = () => {};
 
   return (
-    <>
+    <Provider store={store}>
       <Toaster toastOptions={{ position: "top-center" }} />
       <Layout className={"container"}>
         <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -72,7 +72,7 @@ const App = (props) => {
             openKeys={openKeys}
             defaultSelectedKeys={["Dashboard"]}
           >
-            {store.getState().menus}
+            {stores.getState().menus}
           </Menu>
         </Sider>
         <Layout>
@@ -129,7 +129,7 @@ const App = (props) => {
           </Content>
         </Layout>
       </Layout>
-    </>
+    </Provider>
   );
 };
 

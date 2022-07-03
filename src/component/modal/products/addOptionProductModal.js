@@ -6,7 +6,8 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import toast, { Toaster } from "react-hot-toast";
 
 const AddOptionProductModal = (props) => {
-  const { isOpenModal, setIsOpenModal, listProduct } = props;
+  const { isOpenModal, setIsOpenModal } = props;
+  let listOptionModal = isOpenModal?.data?.list?.[0]?.data;
   const [loading, setLoading] = useState(false);
   const [listOptions, setListOptions] = useState([]);
   const [listProductOptions, setListProductOptions] = useState([]);
@@ -70,16 +71,8 @@ const AddOptionProductModal = (props) => {
     setLoading(false);
   };
 
-  const getDetailProduct = (data) => {
-    const product = listProduct.find(
-      (item) => item.productid === isOpenModal.id
-    );
-    setListProductOptions(product?.list?.[0]?.data);
-    let listOption = product?.list?.[0]?.data;
-    if (data.length > 0) {
-      listOption = data;
-    }
-    const optionProduct = listOption?.map((item) => {
+  const getDetailProduct = () => {
+    const optionProduct = listOptionModal?.map((item) => {
       return {
         title: <div className="title-tree">{item.option_name}</div>,
         key: item.option_id,
@@ -105,8 +98,7 @@ const AddOptionProductModal = (props) => {
                   type="primary"
                   onClick={() =>
                     removeItemForProduct(
-                      item.option_id + "-" + value.option_value_id,
-                      data
+                      item.option_id + "-" + value.option_value_id
                     )
                   }
                 >
@@ -123,27 +115,23 @@ const AddOptionProductModal = (props) => {
   };
 
   const addItemForProduct = async (value) => {
-    const product = listProduct.find(
-      (item) => item.productid === isOpenModal.id
-    );
-    let listProductOption = product?.list?.[0]?.data || [];
     const data = await API.getListOptionProduct();
     const listOption = data.result.filter((item) => item.status == true);
     const option = listOption?.find((item) => item.id == value.slice(0, 1));
     const optionValue = option?.optionValueList?.find(
       (item) => item.id == value.slice(2, 8)
     );
-    const optionHandle = listProductOption.find(
+    const optionHandle = listOptionModal.find(
       (item) => item.option_id == value.slice(0, 1)
     );
     const optionActive = optionHandle?.datadetail?.find(
       (item) => item.option_value_id == optionValue.id
     );
-    const optionActiveById = listProductOption?.find(
+    const optionActiveById = listOptionModal?.find(
       (item) => item.option_id == value.slice(0, 1)
     );
     if (!optionHandle) {
-      listProductOption.push({
+      listOptionModal.push({
         datadetail: [
           {
             option_value_id: Number(optionValue.id),
@@ -165,50 +153,37 @@ const AddOptionProductModal = (props) => {
     } else if (optionHandle) {
       toast.error("Thuộc tính này đã tồn tại trong sản phẩm");
     }
-    getDetailProduct(listProductOption);
+    getDetailProduct();
   };
 
-  const removeItemForProduct = (value, data) => {
-    console.log(value, data);
-
-    const product = listProduct.find(
-      (item) => item.productid === isOpenModal.id
-    );
-    let listProductOption = product?.list?.[0]?.data || [];
-    if (data.length > 0) {
-      listProductOption = data;
-    }
-    const optionHandle = listProductOption.find(
+  const removeItemForProduct = (value) => {
+    const optionHandle = listOptionModal.find(
       (item) => item.option_id == value.slice(0, 1)
     );
-
     const optionRemove = optionHandle?.datadetail?.find(
       (item) => item.option_value_id == value.slice(2, 8)
     );
-    let options = listProductOption.find((item) => {
+    let options = listOptionModal.find((item) => {
       return item.option_id == value.slice(0, 1);
     });
-    listProductOption = listProductOption.filter(
+    listOptionModal = listOptionModal.filter(
       (item) => item.option_id != value.slice(0, 1)
     );
-    console.log(options);
     let optionAfterRemove =
       optionHandle?.datadetail?.filter(
         (item) => item.option_value_id != optionRemove.option_value_id
       ) || [];
-    listProductOption.push({
+    listOptionModal.push({
       datadetail: optionAfterRemove,
       option_id: options.option_id,
       option_name: options.option_name,
     });
-    getDetailProduct(listProductOption);
-    console.log("listProductOption", listProductOption);
+    getDetailProduct();
   };
   useEffect(() => {
-    let listOption = [];
     getOptions();
-    getDetailProduct(listOption);
-  }, [isOpenModal.id]);
+    getDetailProduct();
+  }, [isOpenModal.data]);
 
   return (
     <>

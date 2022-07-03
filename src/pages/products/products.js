@@ -134,7 +134,7 @@ const ProductsrManager = () => {
             onClick={() =>
               setIsOpenModal({
                 type: true,
-                id: record.productid,
+                data: record,
               })
             }
           >
