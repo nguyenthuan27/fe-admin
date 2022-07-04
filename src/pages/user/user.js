@@ -1,14 +1,39 @@
 import { useEffect, useState } from "react";
-import { Col, Form, Collapse, Row, Table, Input, Button, Space } from "antd";
+import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
 import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
 import "./users.scss";
 import UserModal from "../../component/modal/userInfor";
+import API from "../../api/manage";
+import toast, { Toaster } from "react-hot-toast";
 const { Panel } = Collapse;
 const UserManager = () => {
   const [loading, setLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState({
+    type: false,
+    action: "create",
+  });
+  const [users, setUsers] = useState("");
+  const { Option } = Select;
 
-  useEffect(() => {}, []);
+  const getListUser = async () => {
+    let data = await API.getListUser();
+    const listUser = data.result.filter((item) => item.status == true);
+    setUsers(listUser);
+  };
+
+  const deleteUser = async (idUser) => {
+    let data = await API.deleteUser(idUser);
+    if (data.message === "SUCCESS") {
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
+    }
+    getListUser();
+  };
+
+  useEffect(() => {
+    getListUser();
+  }, []);
   const columns = [
     {
       title: "Id",
@@ -17,8 +42,8 @@ const UserManager = () => {
     },
     {
       title: "Full Name",
-      dataIndex: "full_name",
-      key: "full_name",
+      dataIndex: "fullName",
+      key: "fullName",
     },
     {
       title: "Account",
@@ -32,8 +57,8 @@ const UserManager = () => {
     },
     {
       title: "Mobile Phone",
-      dataIndex: "mobile_phone",
-      key: "mobile_phone",
+      dataIndex: "mobilePhone",
+      key: "mobilePhone",
     },
     {
       title: "Email",
@@ -42,8 +67,8 @@ const UserManager = () => {
     },
     {
       title: "Create date",
-      dataIndex: "create_date",
-      key: "create_date",
+      dataIndex: "createDate",
+      key: "createDate",
     },
     {
       title: "Status",
@@ -57,20 +82,20 @@ const UserManager = () => {
     },
     {
       title: "Enable Notification",
-      dataIndex: "enable_notification",
-      key: "enable_notification",
+      dataIndex: "enableNotification",
+      key: "enableNotification",
     },
 
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (record) => (
         <Space size="middle">
-          <a onClick={() => setIsVisible(true)}>
+          <a onClick={() => setIsVisible({ type: true, action: "edit", id: record.id })}>
             <EditTwoTone />
             Edit
           </a>
-          <a>
+          <a onClick={() => deleteUser(record.id)}>
             <DeleteOutlined />
             Delete
           </a>
@@ -78,19 +103,9 @@ const UserManager = () => {
       ),
     },
   ];
-  const data = [
-    {
-      key: "1",
-      id: "1",
-      full_name: "Cao Anh Quan",
-      email: "quancaoanh789@gmail.com",
-      mobile_phone: "0392087387",
-      create_date: "16-06-2022",
-      tags: ["nice", "developer"],
-    },
-  ];
   return (
     <>
+      <Toaster toastOptions={{ position: "top-center" }} />
       <Row className="subject-default">
         <Col span={24} className="title">
           Quản lý User
@@ -102,10 +117,10 @@ const UserManager = () => {
                 <Row span={24} className="subject-filter">
                   <Col span={5} className="filter">
                     <Form.Item label="Full Name" style={{ paddingRight: 20 }}>
-                      <Input placeholder="Full Name" onChange={(e) => {}} />
+                      <Input placeholder="Full Name" onChange={(e) => { }} />
                     </Form.Item>
                     <Form.Item label="Email">
-                      <Input placeholder="Email" onChange={(e) => {}} />
+                      <Input placeholder="Email" onChange={(e) => { }} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -114,14 +129,25 @@ const UserManager = () => {
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-          <Button onClick={() => setIsVisible(true)} type="primary ">
+          <Button onClick={() => setIsVisible({ type: true, action: "create" })} type="primary ">
             Thêm mới
           </Button>
+          <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
+            <Select
+              defaultValue="Sort filter"
+              style={{
+                width: 100,
+              }}
+            >
+              <Option value="10">10</Option>
+              <Option value="15">15</Option>
+            </Select>
+          </Col>
         </Col>
 
         <Col span={24}>
           <Table
-            dataSource={""}
+            dataSource={users}
             columns={columns}
             loading={loading}
             pagination={{
@@ -132,7 +158,13 @@ const UserManager = () => {
           />
         </Col>
       </Row>
-      <UserModal setIsVisible={setIsVisible} isVisible={isVisible} />
+      <UserModal
+        getListUser={getListUser}
+        users={users}
+        setUsers={setUsers}
+        setIsVisible={setIsVisible}
+        isVisible={isVisible}
+      />
     </>
   );
 };
