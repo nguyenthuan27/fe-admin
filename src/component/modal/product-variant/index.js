@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, Radio, Modal, Row, Col, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  Modal,
+  Row,
+  Col,
+  Select,
+  InputNumber,
+} from "antd";
 import API from "../../../api/manage";
 import toast, { Toaster } from "react-hot-toast";
 const { Option } = Select;
 const ProductVariantModal = (props) => {
   const { isVisible, setIsVisible, variants, getListProductVariant } = props;
+  const [listProduct, setListProduct] = useState([]);
   const [form] = Form.useForm();
   const layout = {
     labelCol: { span: 20 },
@@ -13,14 +24,13 @@ const ProductVariantModal = (props) => {
   const onFinish = (value) => {
     let data = {
       id: isVisible.id || "",
-      status: value.status,
+      status: String(value.status) === "true" ? true : false,
       quantity: value.quantity,
       price: value.price,
-      skuId: value.skuId,
       productId: value.productId,
     };
+    console.log("data", data);
     if (isVisible.action === "create") {
-      console.log("vao");
       createOption(data);
     } else {
       updateOption(data);
@@ -58,6 +68,15 @@ const ProductVariantModal = (props) => {
       toast.error(update.message);
     }
   };
+
+  const getListProduct = async () => {
+    const data = await API.getListProduct();
+    setListProduct(data.result.listproductall);
+  };
+
+  useEffect(() => {
+    getListProduct();
+  }, []);
 
   useEffect(() => {
     let listData = variants || [];
@@ -98,44 +117,60 @@ const ProductVariantModal = (props) => {
             }}
             justify="left"
           >
+            <Col span={24}>
+              {isVisible.action === "create" ? (
+                <></>
+              ) : (
+                <Form.Item name="id" label="Id">
+                  <Input disabled />
+                </Form.Item>
+              )}
+            </Col>
             <Col>
-              <Form.Item name="id" label="Id">
-                <Input disabled />
-              </Form.Item>
-              <Form.Item
-                name="skuId"
-                label="skuId"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
               <Form.Item
                 name="productId"
                 label="productId"
                 rules={[{ required: true }]}
               >
-                <Input />
+                <Select>
+                  {listProduct.map((item) => (
+                    <Option key={item.productid} value={item.productid}>
+                      {item.productname}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
-            </Col>
-            <Col>
               <Form.Item
                 name="quantity"
                 label="quantity"
                 rules={[{ required: true }]}
+                style={{
+                  width: "calc(100%)",
+                }}
               >
-                <Input />
+                <InputNumber
+                  style={{
+                    width: "calc(100%)",
+                  }}
+                />
               </Form.Item>
+            </Col>
+            <Col>
               <Form.Item
                 name="price"
                 label="price"
                 rules={[{ required: true }]}
               >
-                <Input />
+                <InputNumber
+                  style={{
+                    width: "calc(100%)",
+                  }}
+                />
               </Form.Item>
               <Form.Item label="Status" name="status">
-                <Radio.Group>
-                  <Radio value={true}> Active </Radio>
-                  <Radio value={false}> Inactive </Radio>
+                <Radio.Group defaultValue={true}>
+                  <Radio value="true"> Active </Radio>
+                  <Radio value="false"> Inactive </Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>

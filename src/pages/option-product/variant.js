@@ -12,26 +12,59 @@ import {
 } from "antd";
 import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import API from "../../api/manage";
-import toast, { Toaster } from "react-hot-toast";
-import ProductVariantModal from "../../component/modal/product-variant";
+import AddOptionProductModal from "../../component/modal/products/addOptionProductModal";
+import axios from "axios";
 const { Panel } = Collapse;
-const ProductVariant = () => {
-  const [loading, setLoading] = useState(false);
-  const [isVisibleCreate, setIsVisibleCreate] = useState({
-    type: false,
-    action: "create",
-  });
-  const [variants, setVariants] = useState("");
-  const { Option } = Select;
+const { Option } = Select;
 
-  const getListProductVariant = async () => {
-    let data = await API.getListProductVariant();
-    setVariants(data.result);
+const Variant = () => {
+  const [loading, setLoading] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState({
+    type: false,
+  });
+  const [loadingOption, setLoadingOption] = useState(false);
+  const [productId, setProductId] = useState("2");
+  const [listOptionValue, setListOptionValue] = useState([]);
+  const [dataVariant, setDataVariant] = useState([]);
+  const [listProduct, setListProduct] = useState([]);
+  const getListProduct = async () => {
+    const res = await API.getListProduct();
+    console.log(res.result?.listproductall);
+    setListProduct(res.result?.listproductall);
+  };
+  const getProductVariant = async () => {
+    setLoading(true);
+    const res = await API.getListProductVariantById(productId);
+    console.log(res.result);
+    setDataVariant(res.result);
+    setLoading(false);
+  };
+  useEffect(() => {
+    getListProduct();
+  }, []);
+
+  useEffect(() => {
+    getProductVariant();
+  }, [productId]);
+  const onChange = (e) => {
+    setProductId(e);
+  };
+  const onSearch = (e) => {
+    console.log(e);
   };
 
   useEffect(() => {
-    getListProductVariant();
-  }, []);
+    (async () => {
+      if (isOpenModal.variantId) {
+        setLoadingOption(true);
+        const res = await API.getVariantValueProductById(
+          isOpenModal?.variantId
+        );
+        setListOptionValue(res.result.listproductall);
+        setLoadingOption(false);
+      }
+    })();
+  }, [isOpenModal.variantId]);
 
   const columns = [
     {
@@ -95,26 +128,25 @@ const ProductVariant = () => {
         <Space size="middle">
           <a
             onClick={() =>
-              setIsVisibleCreate({ type: true, action: "edit", id: record.id })
+              setIsOpenModal({
+                type: true,
+                variantId: record.id,
+              })
             }
           >
             <EditTwoTone />
             Edit
           </a>
-          <a>
-            <DeleteOutlined />
-            Delete
-          </a>
         </Space>
       ),
     },
   ];
+
   return (
     <>
-      <Toaster toastOptions={{ position: "top-center" }} />
       <Row className="subject-default">
         <Col span={24} className="title">
-          Quản lý ProductVariant
+          Quản lý thuộc tính sản phẩm
         </Col>
         <Col span={24} className="subject-search">
           <Form layout="vertical" autoComplete="off">
@@ -148,29 +180,24 @@ const ProductVariant = () => {
             </Collapse>
           </Form>
         </Col>
-        <Col span={24} className="btn-create">
-          <Button
-            onClick={() => setIsVisibleCreate({ type: true, action: "create" })}
-            type="primary "
+        <Col span={24} className="subject-action">
+          <Select
+            showSearch
+            placeholder="Select a person"
+            optionFilterProp="children"
+            onChange={onChange}
+            onSearch={onSearch}
           >
-            Thêm mới
-          </Button>
-          <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
-            <Select
-              defaultValue="Sort filter"
-              style={{
-                width: 100,
-              }}
-            >
-              <Option value="10">10</Option>
-              <Option value="15">15</Option>
-            </Select>
-          </Col>
+            {listProduct?.map((item) => (
+              <Option key={item.productid} value={item.productid}>
+                {item.productname}
+              </Option>
+            ))}
+          </Select>
         </Col>
-
         <Col span={24}>
           <Table
-            dataSource={variants}
+            dataSource={dataVariant}
             columns={columns}
             loading={loading}
             pagination={{
@@ -181,14 +208,15 @@ const ProductVariant = () => {
           />
         </Col>
       </Row>
-      <ProductVariantModal
-        getListProductVariant={getListProductVariant}
-        variants={variants}
-        setVariants={setVariants}
-        setIsVisible={setIsVisibleCreate}
-        isVisible={isVisibleCreate}
+      <AddOptionProductModal
+        loadingOption={loadingOption}
+        setListOptionValue={setListOptionValue}
+        listOptionValue={listOptionValue}
+        productId={productId}
+        isOpenModal={isOpenModal}
+        setIsOpenModal={setIsOpenModal}
       />
     </>
   );
 };
-export default ProductVariant;
+export default Variant;

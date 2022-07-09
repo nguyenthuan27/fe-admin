@@ -4,31 +4,34 @@ import "./style.scss";
 import API from "../../../api/manage";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, removeItem, clear, getItem } from "../../../redux/option";
+import { store } from "../../../redux/store";
 
 const AddOptionProductModal = (props) => {
-  const { isOpenModal, setIsOpenModal } = props;
-  let listOptionModal = isOpenModal?.data?.list?.[0]?.data;
+  const {
+    isOpenModal,
+    setIsOpenModal,
+    productId,
+    listOptionValue,
+    setListOptionValue,
+    loadingOption,
+  } = props;
+  let listOptionModal = listOptionValue;
   const [loading, setLoading] = useState(false);
-  const [listOptions, setListOptions] = useState([]);
-  const [listProductOptions, setListProductOptions] = useState([]);
   const [listOptionTree, setListOptionTree] = useState([]);
   const [listProductOptionTree, setListProductOptionTree] = useState([]);
   const handleCancel = () => {
     setIsOpenModal({
       type: false,
     });
-  };
-  const handleOk = () => {
-    setIsOpenModal({
-      type: false,
-    });
+    setListOptionValue([]);
   };
 
   const getOptions = async () => {
     const data = await API.getListOptionProduct();
     setLoading(true);
     const listOption = data.result.filter((item) => item.status == true);
-    setListOptions(listOption);
     const list = listOption.map((item) => {
       return {
         title: <div className="title-tree">{item.optionName}</div>,
@@ -72,20 +75,20 @@ const AddOptionProductModal = (props) => {
   };
 
   const getDetailProduct = () => {
-    const optionProduct = listOptionModal?.map((item) => {
+    const optionProduct = listOptionModal?.map((item, index) => {
       return {
-        title: <div className="title-tree">{item.option_name}</div>,
-        key: item.option_id,
-        children: item?.datadetail?.map((value, index) => {
-          return {
+        title: <div className="title-tree">{item.optionname}</div>,
+        key: item.id,
+        children: [
+          {
             title: (
               <div className="tree-item" key={index}>
-                <div className="tree-name">{`${value.option_value_name}`}</div>
+                <div className="tree-name">{`${item.optionvaluename}`}</div>
                 <div
                   style={
                     item.optionName === "Color"
                       ? {
-                          background: `${value.option_value_name}`,
+                          background: `${item.optionvaluename}`,
                           width: "30px",
                           height: "30px",
                           borderRadius: "50%",
@@ -98,7 +101,7 @@ const AddOptionProductModal = (props) => {
                   type="primary"
                   onClick={() =>
                     removeItemForProduct(
-                      item.option_id + "-" + value.option_value_id
+                      item.optionid + "-" + item.optionvalueid
                     )
                   }
                 >
@@ -106,84 +109,78 @@ const AddOptionProductModal = (props) => {
                 </Button>
               </div>
             ),
-            key: value.option_value_id + "-" + item.option_id,
-          };
-        }),
+            key: item.optionid + "-" + item.optionvalueid,
+          },
+        ],
       };
     });
     setListProductOptionTree(optionProduct);
   };
 
   const addItemForProduct = async (value) => {
+    const optionId = value.slice(0, 1);
+    const optionValueId = value.slice(2, 8);
     const data = await API.getListOptionProduct();
     const listOption = data.result.filter((item) => item.status == true);
     const option = listOption?.find((item) => item.id == value.slice(0, 1));
     const optionValue = option?.optionValueList?.find(
       (item) => item.id == value.slice(2, 8)
     );
-    const optionHandle = listOptionModal.find(
-      (item) => item.option_id == value.slice(0, 1)
+    const checkOption = listOptionModal?.find(
+      (item) => item.optionid == optionId
     );
-    const optionActive = optionHandle?.datadetail?.find(
-      (item) => item.option_value_id == optionValue.id
-    );
-    const optionActiveById = listOptionModal?.find(
-      (item) => item.option_id == value.slice(0, 1)
-    );
-    if (!optionHandle) {
+    if (!checkOption) {
       listOptionModal.push({
-        datadetail: [
-          {
-            option_value_id: Number(optionValue.id),
-            option_value_name: optionValue.optionValueName,
-          },
-        ],
-        option_id: Number(value.slice(0, 1)),
-        option_name: option.optionName,
+        id: option.id,
+        optionid: optionValue.optionId,
+        optionname: option.optionName,
+        optionvalueid: optionValue.id,
+        optionvaluename: optionValue.optionValueName,
+        productoptionid: 18,
+        status: true,
+        variantid: isOpenModal.variantId,
       });
       toast.success("Thêm thuộc tính sản phẩm thành công");
-    }
-
-    if (!optionActive && optionHandle) {
-      optionActiveById.datadetail.push({
-        option_value_id: optionValue.id,
-        option_value_name: optionValue.optionValueName,
-      });
-      toast.success("Thêm thuộc tính sản phẩm thành công");
-    } else if (optionHandle) {
-      toast.error("Thuộc tính này đã tồn tại trong sản phẩm");
+    } else {
+      toast.error("Sản phẩm đã có thuộc tính này");
     }
     getDetailProduct();
   };
 
   const removeItemForProduct = (value) => {
-    const optionHandle = listOptionModal.find(
-      (item) => item.option_id == value.slice(0, 1)
-    );
-    const optionRemove = optionHandle?.datadetail?.find(
-      (item) => item.option_value_id == value.slice(2, 8)
-    );
-    let options = listOptionModal.find((item) => {
-      return item.option_id == value.slice(0, 1);
-    });
-    listOptionModal = listOptionModal.filter(
-      (item) => item.option_id != value.slice(0, 1)
-    );
-    let optionAfterRemove =
-      optionHandle?.datadetail?.filter(
-        (item) => item.option_value_id != optionRemove.option_value_id
-      ) || [];
-    listOptionModal.push({
-      datadetail: optionAfterRemove,
-      option_id: options.option_id,
-      option_name: options.option_name,
+    listOptionModal = listOptionModal?.filter((item) => {
+      return item.optionid != value.slice(0, 1);
     });
     getDetailProduct();
+    toast.success("Bạn đã xóa thuộc tính của sản phẩm này");
   };
+
+  const handleOk = async () => {
+    const listVariantValue = listOptionModal?.map((item) => {
+      return {
+        optionId: item.optionid,
+        optionValueId: item.optionvalueid,
+      };
+    });
+    let body = {
+      variantId: isOpenModal.variantId,
+      listVariantValue: listVariantValue,
+    };
+    const updateOptionValue = await API.variantValueUpdateList(body);
+    if (updateOptionValue.message === "SUCCESS") {
+      toast.success(updateOptionValue.message);
+    } else {
+      toast.error(updateOptionValue.message);
+    }
+    setIsOpenModal({
+      type: false,
+    });
+  };
+
   useEffect(() => {
+    getDetailProduct(listOptionValue);
     getOptions();
-    getDetailProduct();
-  }, [isOpenModal.data]);
+  }, [listOptionValue]);
 
   return (
     <>

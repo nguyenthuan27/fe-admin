@@ -140,4 +140,30 @@ export default {
     });
     return res.data;
   },
+
+  ///Product variant
+  getListProductVariantById: async (idProduct) => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/productvariant/getbyproductid?id=${idProduct}`,
+    });
+    return res.data;
+  },
+
+  getVariantValueProductById: async (idVariant) => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/variantvalue/get?productvariantid=${idVariant}`,
+    });
+    return res.data;
+  },
+
+  variantValueUpdateList: async (data) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/variantvalue/updatelist`,
+      data: data,
+    });
+    return res.data;
+  }
 };

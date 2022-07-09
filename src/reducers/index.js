@@ -149,6 +149,14 @@ export default (
               icon: "bx bx-detail",
             },
           },
+          {
+            name: "Variant",
+            path: "/variant",
+            component: require("../pages/option-product/variant").default,
+            meta: {
+              icon: "bx bx-detail",
+            },
+          },
         ],
       },
       {
