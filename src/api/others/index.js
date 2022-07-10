@@ -19,4 +19,12 @@ export default {
     });
     return res.data;
   },
+  updateBill: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/bill/update`,
+      data: data,
+    });
+    return res.data;
+  }
 };
