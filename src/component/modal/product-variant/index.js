@@ -82,7 +82,7 @@ const ProductVariantModal = (props) => {
     let listData = variants || [];
     const variant = listData?.find((item) => item.id == isVisible?.id) || [];
     form.setFieldsValue({
-      status: variant.status,
+      status: variant.status ? "true" : "false",
       quantity: variant.quantity,
       price: variant.price,
       skuId: variant.skuId,
@@ -168,7 +168,7 @@ const ProductVariantModal = (props) => {
                 />
               </Form.Item>
               <Form.Item label="Status" name="status">
-                <Radio.Group defaultValue={true}>
+                <Radio.Group defaultValue='true'>
                   <Radio value="true"> Active </Radio>
                   <Radio value="false"> Inactive </Radio>
                 </Radio.Group>
