@@ -118,16 +118,15 @@ const AddOptionProductModal = (props) => {
   };
 
   const addItemForProduct = async (value) => {
-    const optionId = value.slice(0, 1);
-    const optionValueId = value.slice(2, 8);
+    const optionId = value.split("-");
     const data = await API.getListOptionProduct();
     const listOption = data.result.filter((item) => item.status == true);
-    const option = listOption?.find((item) => item.id == value.slice(0, 1));
+    const option = listOption?.find((item) => item.id == optionId[0]);
     const optionValue = option?.optionValueList?.find(
-      (item) => item.id == value.slice(2, 8)
+      (item) => item.id == optionId[1]
     );
     const checkOption = listOptionModal?.find(
-      (item) => item.optionid == optionId
+      (item) => item.optionid == optionId[0]
     );
     if (!checkOption) {
       listOptionModal.push({
@@ -148,8 +147,9 @@ const AddOptionProductModal = (props) => {
   };
 
   const removeItemForProduct = (value) => {
+    const optionHandle = value.split("-");
     listOptionModal = listOptionModal?.filter((item) => {
-      return item.optionid != value.slice(0, 1);
+      return item.optionid != optionHandle[0];
     });
     getDetailProduct();
     toast.success("Bạn đã xóa thuộc tính của sản phẩm này");

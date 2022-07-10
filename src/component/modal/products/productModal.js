@@ -5,7 +5,7 @@ import {
   Input,
   InputNumber,
   Modal,
-  Space,
+  Radio,
   Row,
   Col,
   Select,
@@ -13,7 +13,6 @@ import {
 import API from "../../../api/manage";
 import toast, { Toaster } from "react-hot-toast";
 const { Option } = Select;
-
 const ProductModal = (props) => {
   const { isVisible, setIsVisible, getProducts, listProduct } = props;
   const [form] = Form.useForm();
@@ -21,7 +20,6 @@ const ProductModal = (props) => {
     labelCol: { span: 20 },
     wrapperCol: { span: 24 },
   };
-  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -31,6 +29,21 @@ const ProductModal = (props) => {
     number: {
       range: "${label} must be between ${min} and ${max}",
     },
+  };
+
+  const onFinish = (value) => {
+    let data = {
+      productName: "Giày Vansa",
+      note: "ffdsafdas",
+      status: String(value.status) === "true" ? true : false,
+      group_id: 3,
+    };
+    console.log("data", data);
+    if (isVisible.action === "create") {
+      createOption(data);
+    } else {
+      updateOption(data);
+    }
   };
 
   const createOption = async (data) => {
@@ -93,15 +106,21 @@ const ProductModal = (props) => {
             }}
             justify="left"
           >
-            <Col>
-              <Form.Item
-                name="productid"
-                label="productid"
-                rules={[{ required: true }]}
-              >
-                <Input disabled />
-              </Form.Item>
-            </Col>
+            {isVisible.action === "create" ? (
+              <></>
+            ) : (
+              <>
+                <Col>
+                  <Form.Item
+                    name="productid"
+                    label="productid"
+                    // rules={[{ required: true }]}
+                  >
+                    <Input disabled />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
             <Col>
               <Form.Item
                 name="productname"
@@ -118,6 +137,14 @@ const ProductModal = (props) => {
               </Form.Item>
             </Col>
             <Col>
+              <Form.Item label="Status" name="status">
+                <Radio.Group defaultValue="true">
+                  <Radio value="true"> Active </Radio>
+                  <Radio value="false"> Inactive </Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+            {/* <Col>
               <Form.Item
                 name="fromprice"
                 label="fromprice"
@@ -135,7 +162,7 @@ const ProductModal = (props) => {
               >
                 <Input />
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>

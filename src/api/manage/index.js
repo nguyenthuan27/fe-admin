@@ -12,6 +12,23 @@ export const handleError = (err) => {
 };
 
 export default {
+  createProduct: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/product/create`,
+      data: data,
+    });
+    return res.data;
+  },
+  updateProduct: async (data) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/product/update`,
+      data: data,
+    });
+    return res.data;
+  },
+  
   getListVoucher: async () => {
     const res = await customAxios({
       method: "get",
@@ -165,5 +182,5 @@ export default {
       data: data,
     });
     return res.data;
-  }
+  },
 };
