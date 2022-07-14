@@ -28,9 +28,9 @@ const Variant = () => {
   const [dataVariant, setDataVariant] = useState([]);
   const [listProduct, setListProduct] = useState([]);
   const getListProduct = async () => {
-    const res = await API.getListProduct();
-    console.log(res.result?.listproductall);
-    setListProduct(res.result?.listproductall);
+    const res = await API.getListProductStatusY();
+    console.log(res.result);
+    setListProduct(res.result);
   };
   const getProductVariant = async () => {
     setLoading(true);
@@ -189,8 +189,8 @@ const Variant = () => {
             onSearch={onSearch}
           >
             {listProduct?.map((item) => (
-              <Option key={item.productid} value={item.productid}>
-                {item.productname}
+              <Option key={item.id} value={item.id}>
+                {item.productName}
               </Option>
             ))}
           </Select>

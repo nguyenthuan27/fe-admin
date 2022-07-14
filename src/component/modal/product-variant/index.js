@@ -70,8 +70,9 @@ const ProductVariantModal = (props) => {
   };
 
   const getListProduct = async () => {
-    const data = await API.getListProduct();
-    setListProduct(data.result.listproductall);
+    const data = await API.getListProductStatusY();
+    setListProduct(data.result);
+    console.log(data)
   };
 
   useEffect(() => {
@@ -134,8 +135,8 @@ const ProductVariantModal = (props) => {
               >
                 <Select>
                   {listProduct.map((item) => (
-                    <Option key={item.productid} value={item.productid}>
-                      {item.productname}
+                    <Option key={item.id} value={item.id}>
+                      {item.productName}
                     </Option>
                   ))}
                 </Select>
