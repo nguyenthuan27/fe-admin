@@ -15,6 +15,9 @@ import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./bill.scss";
 import BillModal from "../../component/modal/billInfo";
 import API from "../../api/others";
+import { getColorStatusBill } from "../../utils/fpoly";
+import ChangeStatusBillModal from "../../component/modal/bill/ChangeStatusBillModal";
+
 const { Panel } = Collapse;
 const BillManager = () => {
   const [loading, setLoading] = useState(false);
@@ -22,15 +25,23 @@ const BillManager = () => {
     type: false,
     action: "create",
   });
+  const [openModal, setOpenModal] = useState({
+    type: false,
+  });
+
   const [bills, setListBill] = useState("");
-  const { Option } = Select;
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
   const getListBill = async () => {
     setLoading(true);
     const res = await API.getListBill();
     setListBill(res.result);
+    setLoading(false);
+  };
+
+  const filterBill = async (value) => {
+    setLoading(true);
+    const res = await API.getListBill();
+    const dataFilter = res.result.filter((item) => item.state === value);
+    setListBill(dataFilter);
     setLoading(false);
   };
 
@@ -40,18 +51,6 @@ const BillManager = () => {
 
   const columns = [
     {
-      title: "",
-      key: "",
-      render: (text,) => (
-        <Checkbox onChange={onChange}></Checkbox>
-      ),
-    },
-    {
-      title: "STT",
-      dataIndex: "bill_id",
-      key: "bill_id",
-    },
-    {
       title: "Mã đơn hàng",
       dataIndex: "bill_code",
       key: "bill_code",
@@ -60,70 +59,41 @@ const BillManager = () => {
       title: "Mã sản phẩm",
       key: "skuId",
       render: (text, record) => {
-        return <div>{record.list_product_variant.map((datalistProduct, index) => {
-          return (
-            <div>
-              {datalistProduct.listOptionInfos.map(data => {
-                return <div >
-                  {data.skuId != '' ? data.skuId + ' ' : {}}
-                </div>;
-              })
-              }
-            </div>
-          )
-        },
-        )}
-        </div>;
+        return (
+          <div>
+            {record.list_product_variant.map((datalistProduct, index) => {
+              return (
+                <div>
+                  {datalistProduct.listOptionInfos.map((data) => {
+                    return (
+                      <div>{data.skuId != "" ? data.skuId + " " : {}}</div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        );
       },
     },
     {
       title: "Tổng tiền",
       key: "total_price",
       render: (text, record) => {
-        return <span>{record.total_price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</span>;
+        return (
+          <span>
+            {record.total_price.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </span>
+        );
       },
     },
     {
       title: "Mã voucher",
       dataIndex: "voucher_code",
       key: "voucher_code",
-    },
-    {
-      title: "Màu sắc",
-      key: "Color",
-      render: (text, record) => (
-        <div className="d-flex align-items-center ">
-          {record.list_product_variant.map((items) => (
-            <div>
-              {items.listOptionInfos.map((item) => (
-                <div>
-                  {item.listOptionDetails.map((data) => (
-                    (item.optionName) === "Color" ?
-                      <>
-                        <div
-                          className="d-flex align-items-center justify-content-center option-product"
-                          key={item.optionId}
-                          style={
-                            item.optionName === "Color"
-                              ? { backgroundColor: data.optionValueName }
-                              : {}
-                          }
-                        >
-                        </div>
-                      </>
-                      :
-                      <></>
-                  ))
-                  }
-                </div>
-              )
-              )
-              }
-            </div>
-          )
-          )}
-        </div>
-      ),
     },
     {
       title: "Size",
@@ -134,24 +104,23 @@ const BillManager = () => {
             <div>
               {items.listOptionInfos.map((item) => (
                 <div>
-                  {item.listOptionDetails.map((data) => (
-                    (item.optionName === "Size") ?
+                  {item.listOptionDetails.map((data) =>
+                    item.optionName === "Size" ? (
                       <>
                         <div className="d-flex align-items-center justify-content-center option-product">
-                          {item.optionName === "Size" ? data.optionValueName : ''}
+                          {item.optionName === "Size"
+                            ? data.optionValueName
+                            : ""}
                         </div>
                       </>
-                      :
+                    ) : (
                       <></>
-                  ))
-                  }
+                    )
+                  )}
                 </div>
-              )
-              )
-              }
+              ))}
             </div>
-          )
-          )}
+          ))}
         </div>
       ),
     },
@@ -180,19 +149,24 @@ const BillManager = () => {
       },
     },
     {
-      title: "Điểm tích lũy",
-      dataIndex: "point_receive",
-      key: "point_receive",
-    },
-    {
       title: "Kênh bán hàng",
       dataIndex: "type_vi",
       key: "type_vi",
     },
     {
       title: "Trạng thái đơn hàng",
-      dataIndex: "state_vi",
       key: "state_vi",
+      render: (text, record) => (
+        <span
+          onClick={() => setOpenModal({ type: true, data: record.bill_id })}
+          style={{
+            color: `${getColorStatusBill(text.state)}`,
+            fontWeight: "bolder",
+          }}
+        >
+          {text.state_vi}
+        </span>
+      ),
     },
     {
       title: "Phương thức thanh toán",
@@ -216,10 +190,6 @@ const BillManager = () => {
             <EditTwoTone />
             Edit
           </a>
-          <a>
-            <DeleteOutlined />
-            Delete
-          </a>
         </Space>
       ),
     },
@@ -232,74 +202,8 @@ const BillManager = () => {
         </Col>
         <Col span={24} className="subject-search">
           <Form layout="vertical" autoComplete="off">
-            <Collapse >
+            <Collapse>
               <Panel header="Tìm" key="2">
-                <Row span={24} className="subject-filter" justify="space-around" align="middle">
-                  <Col span={4} className="filter">
-                    <Form.Item label="Mã đơn hàng" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item >
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Mã sản phẩm" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Mã voucher" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item >
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Màu sắc" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={4} className="filter">
-                    <Form.Item label="Size" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Khách hàng" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Người bán" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={4} offset={2} className="filter">
-                    <Form.Item label="Kênh bán hàng" style={{ paddingRight: 20 }}>
-                      <Input
-                        style={{ width: "100%" }}
-                        onChange={(e) => { }}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
                 <Row span={24}>
                   <Col span={12} offset={12}>
                     <Button
@@ -319,36 +223,58 @@ const BillManager = () => {
         <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
           <Space size="middle">
             <Button
-              onClick={() => setIsVisible({ type: false, action: "" })}
+              onClick={() => filterBill("done")}
               className="btn"
               style={{ background: "green" }}
               type="primary"
-
             >
-              Đơn hàng thành công
+              Hoàn thành
             </Button>
             <Button
-              onClick={() => setIsVisible({ type: false, action: "" })}
+              onClick={() => filterBill("approved")}
+              style={{ background: "blue" }}
               className="btn"
-              type="primary"
             >
-              Duyệt đơn hàng
+              Đã duyệt
             </Button>
             <Button
-              onClick={() => setIsVisible({ type: false, action: "" })}
+              onClick={() => filterBill("refuse")}
               className="btn"
-              type="primary"
-              danger
+              style={{ background: "red" }}
             >
-              Từ chối đơn hàng
+              Từ chối
             </Button>
             <Button
-              onClick={() => setIsVisible({ type: false, action: "" })}
+              onClick={() => filterBill("user_cancle")}
               className="btn"
               style={{ background: "yellow", color: "black" }}
               type="primary"
             >
-              Đơn hàng hoàn trả
+              Người dùng huỷ
+            </Button>
+            <Button
+              onClick={() => filterBill("return")}
+              className="btn"
+              style={{ background: "pink", color: "black" }}
+              type="primary"
+            >
+              Trả hàng
+            </Button>
+            <Button
+              onClick={() => filterBill("wait")}
+              className="btn"
+              style={{ background: "purple", color: "black" }}
+              type="primary"
+            >
+              Chờ xác nhận
+            </Button>
+            <Button
+              onClick={() => filterBill("draft")}
+              className="btn"
+              style={{ background: "lime", color: "black" }}
+              type="primary"
+            >
+              Chờ xác nhận
             </Button>
           </Space>
         </Col>
@@ -359,18 +285,24 @@ const BillManager = () => {
             columns={columns}
             loading={loading}
             pagination={{
-              pageSize: 5,
+              pageSize: 10,
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} of ${total} items`,
             }}
           />
         </Col>
-      </Row >
+      </Row>
       <BillModal
         setListBill={setListBill}
         bills={bills}
         setIsVisible={setIsVisible}
         isVisible={isVisible}
+        getListBill={getListBill}
+      />
+
+      <ChangeStatusBillModal
+        isVisible={openModal}
+        setIsVisible={setOpenModal}
         getListBill={getListBill}
       />
     </>
