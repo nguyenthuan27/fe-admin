@@ -89,6 +89,15 @@ export default {
     });
     return res.data;
   },
+  /// Product create Product variante
+  getListProductStatusY: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/product/getbystatuts`,
+    });
+    return res.data;
+  }
+  ,
   // Option Product
   getListOptionProduct: async () => {
     const res = await customAxios({
