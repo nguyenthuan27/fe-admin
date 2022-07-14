@@ -158,7 +158,13 @@ const BillManager = () => {
       key: "state_vi",
       render: (text, record) => (
         <span
-          onClick={() => setOpenModal({ type: true, data: record.bill_id })}
+          onClick={() =>
+            setOpenModal({
+              type: true,
+              id: record.bill_id,
+              status: record.state,
+            })
+          }
           style={{
             color: `${getColorStatusBill(text.state)}`,
             fontWeight: "bolder",
@@ -274,7 +280,7 @@ const BillManager = () => {
               style={{ background: "lime", color: "black" }}
               type="primary"
             >
-              Chờ xác nhận
+              Nháp
             </Button>
           </Space>
         </Col>

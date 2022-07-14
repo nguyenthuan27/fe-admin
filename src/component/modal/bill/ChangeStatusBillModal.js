@@ -10,7 +10,7 @@ import {
   Col,
   Select,
 } from "antd";
-import API from "../../../api/manage";
+import API from "../../../api/others";
 import toast, { Toaster } from "react-hot-toast";
 const { Option } = Select;
 
@@ -34,13 +34,26 @@ const ChangeStatusBillModal = (props) => {
   };
   const onFinish = async (value) => {
     setLoading(true);
-    const body = {};
+    const body = {
+      bill_id: value.bill_id,
+      state: value.status,
+    };
     const res = await API.updateStatusBill(body);
-    if (res.status === 200) {
+    if (res.message === "SUCCESS") {
+      toast.success(res.message);
       getListBill();
+      setIsVisible({ type: false });
+    } else {
+      toast.error(res.message);
     }
     setLoading(false);
   };
+  useEffect(() => {
+    form.setFieldsValue({
+      bill_id: isVisible.id,
+      status: isVisible.status,
+    });
+  }, [isVisible.type]);
   return (
     <>
       <Modal
@@ -69,8 +82,8 @@ const ChangeStatusBillModal = (props) => {
           >
             <Col>
               <Form.Item
-                name="productid"
-                label="productid"
+                name="bill_id"
+                label="Bill Id"
                 // rules={[{ required: true }]}
               >
                 <Input disabled />
@@ -78,16 +91,25 @@ const ChangeStatusBillModal = (props) => {
             </Col>
 
             <Col>
-              <Form.Item name="note" label="note" rules={[{ required: true }]}>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col>
-              <Form.Item label="Status" name="status">
-                <Radio.Group defaultValue="true">
-                  <Radio value="true"> Active </Radio>
-                  <Radio value="false"> Inactive </Radio>
-                </Radio.Group>
+              <Form.Item
+                name="status"
+                label="Status"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  placeholder="Please select"
+                  style={{
+                    width: "calc(100%)",
+                  }}
+                >
+                  <Option value="done">Hoàn thành</Option>
+                  <Option value="approved">Đã duyệt</Option>
+                  <Option value="refuse">Từ chối</Option>
+                  <Option value="user_cancle">Người dùng huỷ</Option>
+                  <Option value="return">Trả hàng</Option>
+                  <Option value="wait"> Chờ xác nhận</Option>
+                  <Option value="draft"> Nháp</Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>
