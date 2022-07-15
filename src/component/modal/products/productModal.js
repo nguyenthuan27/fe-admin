@@ -33,9 +33,9 @@ const ProductModal = (props) => {
 
   const onFinish = (value) => {
     let data = {
-      productName: "Giày Vansa",
-      note: "ffdsafdas",
-      status: String(value.status) === "true" ? true : false,
+      productName: value.productname,
+      note: value.note,
+      status: String(value.status) === "true" ? true : (value.status === undefined ? true : false),
       group_id: 3,
     };
     console.log("data", data);
@@ -47,7 +47,7 @@ const ProductModal = (props) => {
   };
 
   const createOption = async (data) => {
-    let create = await API.createOptionProduct(data);
+    let create = await API.createProduct(data);
     if (create.message === "SUCCESS") {
       toast.success(create.message);
       getProducts();
@@ -58,7 +58,7 @@ const ProductModal = (props) => {
   };
 
   const updateOption = async (data) => {
-    let update = await API.updateOptionProduct(data);
+    let update = await API.updateProduct(data);
     if (update.message === "SUCCESS") {
       toast.success(update.message);
       getProducts();
