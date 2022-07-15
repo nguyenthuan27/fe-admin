@@ -50,7 +50,7 @@ const ProductVariantModal = (props) => {
   const createOption = async (data) => {
     let create = await API.createProductVariant(data);
     if (create.message === "SUCCESS") {
-      toast.success(create.message);
+      toast.success(create.message+" MÃ SKU : "+create.result.skuId);
       getListProductVariant();
       setIsVisible({ type: false, action: isVisible.action });
     } else {
@@ -60,8 +60,9 @@ const ProductVariantModal = (props) => {
 
   const updateOption = async (data) => {
     let update = await API.updateProductVariant(data);
+    console.log(update);
     if (update.message === "SUCCESS") {
-      toast.success(update.message);
+      toast.success(update.message +" MÃ SKU : "+update.result);
       getListProductVariant();
       setIsVisible({ type: false, action: isVisible.action });
     } else {
@@ -72,7 +73,6 @@ const ProductVariantModal = (props) => {
   const getListProduct = async () => {
     const data = await API.getListProductStatusY();
     setListProduct(data.result);
-    console.log(data)
   };
 
   useEffect(() => {
