@@ -192,4 +192,11 @@ export default {
     });
     return res.data;
   },
+  getProductVariantById: async (idVariant) => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/product/getlistproductbyvariantid?id=${idVariant}`,
+    });
+    return res.data;
+  }
 };

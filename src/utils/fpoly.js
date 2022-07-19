@@ -15,4 +15,14 @@ const getColorStatusBill = (status) => {
     return "lime";
   }
 };
-export { getColorStatusBill };
+
+const controlType = {
+  input: 0,
+  inputNumber: 1,
+  currency: 2,
+  percent: 3,
+  select: 4,
+  checkbox: 5,
+  datepicker: 6,
+};
+export { getColorStatusBill, controlType };

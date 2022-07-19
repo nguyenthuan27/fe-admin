@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { DeleteOutlined, EyeOutlined, EditTwoTone } from "@ant-design/icons";
 import "./bill.scss";
-import BillModal from "../../component/modal/billInfo";
+import BillModal from "../../component/modal/bill/billInfo";
 import API from "../../api/others";
 import { getColorStatusBill } from "../../utils/fpoly";
 import ChangeStatusBillModal from "../../component/modal/bill/ChangeStatusBillModal";
