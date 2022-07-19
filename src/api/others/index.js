@@ -34,5 +34,13 @@ export default {
       data: data,
     });
     return res.data;
-  }
+  },
+  updateBillById: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      url: `${serverEndpoint}/shoeswear/bill/update`,
+      data: data,
+    });
+    return res.data;
+  },
 };

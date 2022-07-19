@@ -57,7 +57,7 @@ const TableVariant = (props) => {
         dataSource={dataProductVariant}
         columns={defaultColumns}
         title={() => "Sản phẩm"}
-        footer={() => "Footer"}
+        footer={() => `Số lượng: ${dataProductVariant.length}`}
       />
       <AddProductModal setIsVisible={setIsVisible} isVisible={isVisible} />
     </div>

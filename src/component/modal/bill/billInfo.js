@@ -16,6 +16,9 @@ import toast, { Toaster } from "react-hot-toast";
 import API from "../../../api/others";
 import API_PRODUCT from "../../../api/manage";
 import TableVariant from "./TableVariant";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, clear, removeItem } from "../../../redux/cart";
+
 const BillModal = (props) => {
   const { isVisible, setIsVisible, bills, getListBill } = props;
   const [listProduct, setListProduct] = useState([]);
@@ -34,9 +37,6 @@ const BillModal = (props) => {
   useEffect(() => {
     getListProduct();
   }, []);
-  const onFinish = (value) => {
-    let data = {};
-  };
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -47,32 +47,123 @@ const BillModal = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
+  const dispatch = useDispatch();
+  const cartData = useSelector((state) => state.productCart.value);
+  const onFinish = async (value) => {
+    console.log("cartData", cartData);
+    const listProduct = cartData.map((item) => {
+      return {
+        variant_id: item.variantId,
+        amount: item.amount,
+      };
+    });
+    let data = {
+      bill: {
+        id: isVisible.id,
+        note: value.note,
+        address: value.address,
+        receiverName: value.customer_name,
+        email: value.email,
+      },
+      list_product_variant: listProduct,
+    };
+    let update = await API.updateBill(data);
+    if (update.message === "SUCCESS") {
+      toast.success(update.message);
+      getListBill();
+      setIsVisible({ type: false });
+    } else {
+      toast.error(update.message);
+    }
+  };
+  useEffect(() => {
+    dispatch(clear());
+    const billItem = bills?.find((item) => item.bill_id == isVisible.id);
+    const listProductInBill = billItem?.list_product_variant.map((result) => {
+      return {
+        sku_id: result.skuId,
+        variantId: result.productVariantId,
+        name: result.productName,
+        price: result.amount,
+        amount: billItem.amount,
+        totalPrice: billItem.total_price,
+        option: result.listOptionInfos,
+      };
+    });
+    if (listProductInBill) {
+      for (let i = 0; i < listProductInBill.length; i++) {
+        dispatch(addItem(listProductInBill[i]));
+      }
+    }
+    form.setFieldsValue({
+      customer_name: billItem?.customer.customer_name,
+      email: billItem?.email,
+      address: billItem?.address,
+      phone: billItem?.phone,
+      voucher: "",
+      note: billItem?.note,
+    });
+  }, [isVisible.type && isVisible.id]);
 
   useEffect(() => {
-    form.setFieldsValue({});
-  }, [isVisible.type]);
-
+    const billItem = bills?.find((item) => item.bill_id == isVisible.id);
+    let totalPrice = cartData.reduce((total, item) => {
+      return total + item.totalPrice;
+    }, 0);
+    form.setFieldsValue({
+      quantity: cartData.length,
+      totalPrice: totalPrice,
+    });
+  }, [cartData]);
   const handleChange = async (value) => {
     const getProductVariant = await API_PRODUCT.getListProductVariantById(
       value
     );
     setDataProductVariant(getProductVariant.result);
   };
+
   const columns = [
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
-      render: (text) => <a>{text}</a>,
+      key: "name",
     },
     {
-      title: "Cash Assets",
-      className: "column-money",
-      dataIndex: "money",
-      align: "right",
+      title: "Mã sản phẩm",
+      dataIndex: "sku_id",
+      key: "sku_id",
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Giá sản phẩm",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "amount",
+      key: "amount",
+    },
+
+    {
+      title: "Đơn giá",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+    },
+    {
+      title: "Thao tác",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            onClick={() => {
+              dispatch(removeItem(record.variantId));
+            }}
+          >
+            Xóa
+          </Button>
+        </Space>
+      ),
     },
   ];
   return (
@@ -81,8 +172,8 @@ const BillModal = (props) => {
       <Modal
         title="Sửa thông tin hóa đơn"
         centered
-        visible={isVisible}
-        onCancel={() => setIsVisible({ type: false, action: isVisible.action })}
+        visible={isVisible.type}
+        onCancel={() => setIsVisible({ type: false })}
         footer={null}
         width="65%"
       >
@@ -118,10 +209,15 @@ const BillModal = (props) => {
             <Col span={12} style={{ marginTop: "72px" }}>
               <Table
                 columns={columns}
-                dataSource=""
+                dataSource={cartData}
                 bordered
                 title={() => "Danh sách sản phẩm đã chọn"}
-                footer={() => "Footer"}
+                footer={() =>
+                  `Tổng tiền: ${cartData.reduce(
+                    (total, item) => total + item.totalPrice,
+                    0
+                  )}`
+                }
                 pagination={{
                   pageSize: 5,
                   showTotal: (total, range) =>
@@ -152,9 +248,9 @@ const BillModal = (props) => {
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please input your email!" },
+                // ]}
               >
                 <Input />
               </Form.Item>
@@ -162,7 +258,7 @@ const BillModal = (props) => {
                 label="Địa chỉ"
                 name="address"
                 rules={[
-                  { required: true, message: "Please input your email!" },
+                  { required: true, message: "Please input your address!" },
                 ]}
               >
                 <Input />
@@ -170,9 +266,9 @@ const BillModal = (props) => {
               <Form.Item
                 label="SDT"
                 name="phone"
-                rules={[
-                  { required: true, message: "Please input your phone!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please input your phone!" },
+                // ]}
               >
                 <Input />
               </Form.Item>
@@ -188,10 +284,15 @@ const BillModal = (props) => {
                 Thanh toán
               </div>
               <Form.Item name="quantity" label="Số lượng sản phẩm">
-                <Input />
+                <Input disabled />
               </Form.Item>
               <Form.Item name="totalPrice" label="Tổng tiền">
-                <InputNumber />
+                <InputNumber
+                  disabled
+                  style={{
+                    width: "calc(100%)",
+                  }}
+                />
               </Form.Item>
               <Form.Item name="voucher" label="Giảm giá">
                 <Input />

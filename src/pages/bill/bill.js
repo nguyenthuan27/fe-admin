@@ -23,13 +23,12 @@ const BillManager = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState({
     type: false,
-    action: "create",
   });
   const [openModal, setOpenModal] = useState({
     type: false,
   });
 
-  const [bills, setListBill] = useState("");
+  const [bills, setListBill] = useState([]);
   const getListBill = async () => {
     setLoading(true);
     const res = await API.getListBill();
@@ -61,14 +60,10 @@ const BillManager = () => {
       render: (text, record) => {
         return (
           <div>
-            {record.list_product_variant.map((datalistProduct, index) => {
+            {record.list_product_variant.map((data, index) => {
               return (
                 <div>
-                  {datalistProduct.listOptionInfos.map((data) => {
-                    return (
-                      <div>{data.skuId != "" ? data.skuId + " " : {}}</div>
-                    );
-                  })}
+                  <div>{data.skuId}</div>
                 </div>
               );
             })}
@@ -102,9 +97,9 @@ const BillManager = () => {
         <div className="d-flex align-items-center">
           {record.list_product_variant.map((items) => (
             <div>
-              {items.listOptionInfos.map((item) => (
+              {items.data.map((item) => (
                 <div>
-                  {item.listOptionDetails.map((data) =>
+                  {item.datadetail.map((data) =>
                     item.optionName === "Size" ? (
                       <>
                         <div className="d-flex align-items-center justify-content-center option-product">
@@ -188,7 +183,6 @@ const BillManager = () => {
             onClick={() =>
               setIsVisible({
                 type: true,
-                action: "edit",
                 id: record.bill_id,
               })
             }

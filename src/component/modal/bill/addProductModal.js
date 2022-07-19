@@ -14,7 +14,10 @@ import {
 import API from "../../../api/manage";
 import toast, { Toaster } from "react-hot-toast";
 import "./style.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem, clear } from "../../../redux/cart";
 const AddProductModal = (props) => {
+  const [loading, setLoading] = useState(false);
   const { isVisible, setIsVisible } = props;
   const [listProductOptionTree, setListProductOptionTree] = useState([]);
   const [form] = Form.useForm();
@@ -32,8 +35,30 @@ const AddProductModal = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-  const onFinish = (value) => {
-    
+  const dispatch = useDispatch();
+  const onFinish = async (value) => {
+    setLoading(true);
+    const data = await API.getProductVariantById(isVisible.id);
+    let result = data.result.listproductall[0];
+    if (result.list[0].quantity < value.amount) {
+      toast.error("Số lượng không đủ");
+      setLoading(false);
+      return;
+    } else {
+      const newItem = {
+        sku_id: result.list[0].sku_id,
+        variantId: isVisible.id,
+        name: result.productname,
+        price: result.toprice,
+        amount: value.amount,
+        totalPrice: result.toprice * value.amount,
+        option: result.list[0].data,
+      };
+      dispatch(addItem(newItem));
+      setLoading(false);
+      toast.success("Thêm sản phẩm thành công");
+    }
+    setIsVisible({ type: false });
   };
   const getDetailProduct = async () => {
     if (!isVisible.id) return;
@@ -42,9 +67,9 @@ const AddProductModal = (props) => {
     form.setFieldsValue({
       price: result.fromprice,
       productname: result.productname,
+      quantity: result.list[0].quantity,
     });
     const listOptionModal = data.result.listproductall[0]?.list[0].data || [];
-    console.log(listOptionModal);
     const optionProduct = listOptionModal?.map((item, index) => {
       return {
         title: <div className="title-tree">{item.option_name}</div>,
@@ -54,7 +79,7 @@ const AddProductModal = (props) => {
             title: (
               <div
                 className="tree-item"
-                key={value.option_value_id + item.option_id}
+                key={value.option_value_id + item.option_id + index + 5}
               >
                 <div className="tree-name">{`${value.option_value_name}`}</div>
                 <div
@@ -72,7 +97,7 @@ const AddProductModal = (props) => {
                 ></div>
               </div>
             ),
-            key: value.optionId + "-" + value.id,
+            key: value.option_value_id + "-" + item.option_id,
           };
         }),
       };
@@ -86,10 +111,10 @@ const AddProductModal = (props) => {
   return (
     <>
       <Modal
-        title="Thêm product"
+        title="Thông tin sản sản phẩm"
         centered
         visible={isVisible.type}
-        onCancel={() => setIsVisible({ type: false, action: isVisible.action })}
+        onCancel={() => setIsVisible({ type: false })}
         footer={null}
         width="45%"
       >
@@ -113,17 +138,27 @@ const AddProductModal = (props) => {
             <Col span={10}>
               <Form.Item
                 name="productname"
-                label="productname"
+                label="Tên sản phẩm"
                 rules={[{ required: true }]}
               >
-                <Input />
+                <Input disabled />
+              </Form.Item>
+              <Form.Item name="price" label="Giá" rules={[{ required: true }]}>
+                <Input disabled />
               </Form.Item>
               <Form.Item
-                name="price"
-                label="price"
+                name="quantity"
+                label="Số lượng còn lại"
                 rules={[{ required: true }]}
               >
-                <Input />
+                <Input disabled />
+              </Form.Item>
+              <Form.Item
+                name="amount"
+                label="Mua với số lượng"
+                rules={[{ required: true }]}
+              >
+                <InputNumber />
               </Form.Item>
             </Col>
             <Col span={14} className="current-option">
@@ -144,6 +179,7 @@ const AddProductModal = (props) => {
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 9 }}>
             <>
               <Button
+                loading={loading}
                 type="primary"
                 htmlType="submit"
                 style={{ marginTop: "30px" }}
