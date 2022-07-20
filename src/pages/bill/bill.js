@@ -128,7 +128,7 @@ const BillManager = () => {
       title: "Khách hàng",
       key: "customer_name",
       render: (text, record) => {
-        return <span>{record.customer.customer_name}</span>;
+        return <span>{record.receiver_name}</span>;
       },
     },
     {

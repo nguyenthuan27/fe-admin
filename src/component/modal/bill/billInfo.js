@@ -62,7 +62,7 @@ const BillModal = (props) => {
         id: isVisible.id,
         note: value.note,
         address: value.address,
-        receiverName: value.customer_name,
+        receiver_name: value.customer_name,
         email: value.email,
       },
       list_product_variant: listProduct,
@@ -84,9 +84,9 @@ const BillModal = (props) => {
         sku_id: result.skuId,
         variantId: result.productVariantId,
         name: result.productName,
-        price: result.amount,
-        amount: billItem.amount,
-        totalPrice: billItem.total_price,
+        price: result.price,
+        amount: result.amount,
+        totalPrice: result.price * result.amount,
         option: result.listOptionInfos,
       };
     });
@@ -106,7 +106,6 @@ const BillModal = (props) => {
   }, [isVisible.type && isVisible.id]);
 
   useEffect(() => {
-    const billItem = bills?.find((item) => item.bill_id == isVisible.id);
     let totalPrice = cartData.reduce((total, item) => {
       return total + item.totalPrice;
     }, 0);

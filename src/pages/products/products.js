@@ -30,8 +30,8 @@ const ProductsrManager = () => {
 
   const { Option } = Select;
   const getProducts = async () => {
-    const data = await API.getListProduct();
-    setListProduct(data.result.listproductall);
+    const data = await API.getListProductAll();
+    setListProduct(data.result);
   };
   useEffect(() => {
     getProducts();
@@ -40,67 +40,67 @@ const ProductsrManager = () => {
   const columns = [
     {
       title: "productid",
-      dataIndex: "productid",
-      key: "productid",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Product name",
-      dataIndex: "productname",
-      key: "productname",
+      dataIndex: "productName",
+      key: "productName",
     },
-    {
-      title: "fromprice",
-      dataIndex: "fromprice",
-      key: "fromprice",
-    },
-    {
-      title: "toprice",
-      dataIndex: "toprice",
-      key: "toprice",
-    },
-    {
-      title: "Size",
-      render: (text, record) => (
-        <div className="d-flex align-items-center ">
-          {record.list[0].data
-            .find((item) => item.option_name === "Size")
-            .datadetail.map((item) => (
-              <div className="d-flex align-items-center justify-content-center option-product">
-                <span>{item.option_value_name}</span>
-              </div>
-            ))}
-        </div>
-      ),
-    },
-    {
-      title: "Color",
-      render: (text, record) => (
-        <div className="d-flex align-items-center ">
-          {record.list[0].data
-            .find((item) => item.option_name === "Color")
-            .datadetail?.map((item) => (
-              <div
-                className="d-flex align-items-center justify-content-center option-product"
-                style={{ backgroundColor: item.option_value_name }}
-              ></div>
-            ))}
-        </div>
-      ),
-    },
-    {
-      title: "Material",
-      render: (text, record) => (
-        <div className="d-flex align-items-center ">
-          {record.list[0].data
-            ?.find((item) => item.option_name === "Material")
-            ?.datadetail?.map((item) => (
-              <div className="d-flex align-items-center justify-content-center option-product">
-                <span>{item.option_value_name}</span>
-              </div>
-            ))}
-        </div>
-      ),
-    },
+    // {
+    //   title: "fromprice",
+    //   dataIndex: "fromprice",
+    //   key: "fromprice",
+    // },
+    // {
+    //   title: "toprice",
+    //   dataIndex: "toprice",
+    //   key: "toprice",
+    // },
+    // {
+    //   title: "Size",
+    //   render: (text, record) => (
+    //     <div className="d-flex align-items-center ">
+    //       {record.list[0].data
+    //         .find((item) => item.option_name === "Size")
+    //         .datadetail.map((item) => (
+    //           <div className="d-flex align-items-center justify-content-center option-product">
+    //             <span>{item.option_value_name}</span>
+    //           </div>
+    //         ))}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   title: "Color",
+    //   render: (text, record) => (
+    //     <div className="d-flex align-items-center ">
+    //       {record.list[0].data
+    //         .find((item) => item.option_name === "Color")
+    //         .datadetail?.map((item) => (
+    //           <div
+    //             className="d-flex align-items-center justify-content-center option-product"
+    //             style={{ backgroundColor: item.option_value_name }}
+    //           ></div>
+    //         ))}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   title: "Material",
+    //   render: (text, record) => (
+    //     <div className="d-flex align-items-center ">
+    //       {record.list[0].data
+    //         ?.find((item) => item.option_name === "Material")
+    //         ?.datadetail?.map((item) => (
+    //           <div className="d-flex align-items-center justify-content-center option-product">
+    //             <span>{item.option_value_name}</span>
+    //           </div>
+    //         ))}
+    //     </div>
+    //   ),
+    // },
 
     {
       title: "note",

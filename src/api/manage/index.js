@@ -28,7 +28,7 @@ export default {
     });
     return res.data;
   },
-  
+
   getListVoucher: async () => {
     const res = await customAxios({
       method: "get",
@@ -96,8 +96,7 @@ export default {
       url: `${serverEndpoint}/shoeswear/product/getbystatuts`,
     });
     return res.data;
-  }
-  ,
+  },
   // Option Product
   getListOptionProduct: async () => {
     const res = await customAxios({
@@ -142,6 +141,13 @@ export default {
     return res.data;
   },
 
+  getListProductAll: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/product/get`,
+    });
+    return res.data;
+  },
   ///Product variant
   getListProductVariant: async () => {
     const res = await customAxios({
@@ -198,5 +204,5 @@ export default {
       url: `${serverEndpoint}/shoeswear/product/getlistproductbyvariantid?id=${idVariant}`,
     });
     return res.data;
-  }
+  },
 };
