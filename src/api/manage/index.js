@@ -205,4 +205,13 @@ export default {
     });
     return res.data;
   },
+
+  addOptionForProductVariant: async (body) => {
+    const res = await customAxios({
+      method: "put",
+      url: `${serverEndpoint}/shoeswear/variantvalue/copyvariant`,
+      data: body,
+    });
+    return res.data;
+  },
 };
