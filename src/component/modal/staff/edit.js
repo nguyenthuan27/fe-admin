@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Modal, Radio, DatePicker, TimePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  DatePicker,
+  TimePicker,
+} from "antd";
 const EditStaff = (props) => {
   const { isVisible, setIsVisible } = props;
   const layout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-
-  }
+  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -28,7 +35,7 @@ const EditStaff = (props) => {
   const onOk = (value) => {
     console.log("onOk: ", value);
   };
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Modal
@@ -44,7 +51,6 @@ const EditStaff = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-
           <Form.Item
             name={["staff", "id"]}
             label="Id"
@@ -69,15 +75,10 @@ const EditStaff = (props) => {
             <Input />
           </Form.Item>
 
-          
-
-          
-
           <Form.Item name="role-group" label="Status">
             <Radio.Group>
               <Radio value="1">Nhân viên</Radio>
               <Radio value="2">Quản lý</Radio>
-
             </Radio.Group>
           </Form.Item>
 

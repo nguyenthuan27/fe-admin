@@ -1,4 +1,4 @@
-import { Button, Col, Modal, Row, Tree } from "antd";
+import { Button, Col, Modal, Row, Tree, Select, Form, Space } from "antd";
 import { useEffect, useState } from "react";
 import "./style.scss";
 import API from "../../../api/manage";
@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, removeItem, clear, getItem } from "../../../redux/option";
 import { store } from "../../../redux/store";
-
+const { Option } = Select;
 const AddOptionProductModal = (props) => {
   const {
     isOpenModal,
@@ -21,6 +21,7 @@ const AddOptionProductModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [listOptionTree, setListOptionTree] = useState([]);
   const [listProductOptionTree, setListProductOptionTree] = useState([]);
+  const [listVariantProduct, setListVariantProduct] = useState([]);
   const handleCancel = () => {
     setIsOpenModal({
       type: false,
@@ -182,6 +183,28 @@ const AddOptionProductModal = (props) => {
     getOptions();
   }, [listOptionValue]);
 
+  const onFinish = async (values) => {
+    const body = {
+      variantIdOlD: values.variantId,
+      variantIdNew: isOpenModal.variantId,
+    };
+    const addOption = await API.addOptionForProductVariant(body);
+    if (addOption.message === "SUCCESS") {
+      toast.success(addOption.message);
+    } else {
+      toast.error(addOption.message);
+    }
+    setIsOpenModal({
+      type: false,
+    });
+  };
+  useEffect(() => {
+    (async () => {
+      const listVariantProduct = await API.getListProductVariant();
+      console.log("listVariantProduct", listVariantProduct);
+      setListVariantProduct(listVariantProduct.result);
+    })();
+  }, []);
   return (
     <>
       <Modal
@@ -219,6 +242,44 @@ const AddOptionProductModal = (props) => {
               />
             </div>
           </Col>
+          {listOptionModal.length ? (
+            <></>
+          ) : (
+            <>
+              <Col span={24}>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    marginTop: "20px",
+                    fontSize: "20px",
+                  }}
+                >
+                  Thêm thuộc tính nhanh
+                </div>
+                <Form layout="vertical" onFinish={onFinish} autoComplete="off">
+                  <Form.Item name="variantId" label="Variant ID">
+                    <Select
+                      style={{
+                        width: 200,
+                      }}
+                      placeholder="Variant ID"
+                    >
+                      {listVariantProduct.map((item) => {
+                        return <Option value={item.id}>{item.id}</Option>;
+                      })}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item>
+                    <Space>
+                      <Button type="primary" htmlType="submit">
+                        Chọn
+                      </Button>
+                    </Space>
+                  </Form.Item>
+                </Form>
+              </Col>
+            </>
+          )}
         </Row>
       </Modal>
     </>

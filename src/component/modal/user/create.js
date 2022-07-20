@@ -6,7 +6,7 @@ const CreateUser = (props) => {
     labelCol: { span: 20 },
     wrapperCol: { span: 24 },
   };
-  const onFinish = () => { };
+  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -17,7 +17,7 @@ const CreateUser = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Modal
@@ -34,12 +34,15 @@ const CreateUser = (props) => {
           layout="vertical"
           validateMessages={validateMessages}
         >
-          <Row gutter={{
-            xs: 8,
-            sm: 16,
-            md: 24,
-            lg: 59
-          }} justify="left">
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 59,
+            }}
+            justify="left"
+          >
             <Col>
               <Form.Item
                 name={["user", "id"]}
@@ -149,7 +152,7 @@ const CreateUser = (props) => {
             </Button>
           </Form.Item>
         </Form>
-      </Modal >
+      </Modal>
     </>
   );
 };

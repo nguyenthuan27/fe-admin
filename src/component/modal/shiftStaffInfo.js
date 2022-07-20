@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Modal, Radio, DatePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  DatePicker,
+} from "antd";
 const ShiftStaffModal = (props) => {
   const { isVisible, setIsVisible } = props;
   const layout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-
-  }
+  const onFinish = () => {};
 
   const onChange = (value, dateString) => {
     console.log("Selected Time: ", value);
@@ -29,7 +35,7 @@ const ShiftStaffModal = (props) => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Modal
@@ -45,7 +51,6 @@ const ShiftStaffModal = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-
           <Form.Item
             name={["shift", "id"]}
             label="Id"
@@ -91,10 +96,14 @@ const ShiftStaffModal = (props) => {
             label="Start date"
             rules={[{ required: true }]}
           >
-            <DatePicker showTime onChange={onChange}
+            <DatePicker
+              showTime
+              onChange={onChange}
               style={{
-                width: '100%',
-              }} onOk={onOk} />
+                width: "100%",
+              }}
+              onOk={onOk}
+            />
           </Form.Item>
 
           <Form.Item
@@ -102,10 +111,14 @@ const ShiftStaffModal = (props) => {
             label="Expire date"
             rules={[{ required: true }]}
           >
-            <DatePicker showTime onChange={onChange}
+            <DatePicker
+              showTime
+              onChange={onChange}
               style={{
-                width: '100%',
-              }} onOk={onOk} />
+                width: "100%",
+              }}
+              onOk={onOk}
+            />
           </Form.Item>
 
           <Form.Item name="radio-group" label="Status">

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Modal, Radio, DatePicker, TimePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  DatePicker,
+  TimePicker,
+} from "antd";
 const EditVoucherLog = (props) => {
   const { isVisible, setIsVisible } = props;
   const layout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-
-  }
+  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -28,7 +35,7 @@ const EditVoucherLog = (props) => {
   const onOk = (value) => {
     console.log("onOk: ", value);
   };
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Modal
@@ -44,8 +51,7 @@ const EditVoucherLog = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-
-<Form.Item
+          <Form.Item
             name={["voucher_log", "id"]}
             label="Id"
             rules={[{ required: true }]}
@@ -96,8 +102,6 @@ const EditVoucherLog = (props) => {
           >
             <Input />
           </Form.Item>
-
-
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type="primary" htmlType="submit">
