@@ -156,6 +156,14 @@ export default {
     });
     return res.data;
   },
+
+  getListProductVariantForBill: async () => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/productvariant/list`,
+    });
+    return res.data;
+  },
   createProductVariant: async (data) => {
     const res = await customAxios({
       method: "post",

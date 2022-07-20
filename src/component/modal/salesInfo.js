@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, InputNumber, Modal, Radio } from "antd";
 const SalesModal = (props) => {
-    const { isVisible, setIsVisible } = props;
+    const { isVisible, setIsVisible, setCustomer } = props;
     const layout = {
         labelCol: { span: 5 },
         wrapperCol: { span: 16 },

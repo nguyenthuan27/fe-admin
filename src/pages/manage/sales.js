@@ -12,6 +12,7 @@ import {
   Tabs,
 } from "antd";
 import SalesModal from "../../component/modal/salesInfo";
+import API from "../../api/manage";
 import { SearchOutlined, PlusSquareOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -23,6 +24,12 @@ const Sales = () => {
   ];
   const [activeKey, setActiveKey] = useState(initialPanes[0].key);
   const [panes, setPanes] = useState(initialPanes);
+  const [listProductVariant, setListProductVariant] = useState();
+  const [productVariant, setProductVariant] = useState();
+  const [customer, setCustomer] = useState({
+    fullName: "",
+    id: "",
+  });
   const newTabIndex = useRef(0);
   const onChange = (newActiveKey) => {
     setActiveKey(newActiveKey);
@@ -72,7 +79,26 @@ const Sales = () => {
   };
   const [isVisible, setIsVisible] = useState(false);
 
-  const onFinish = () => { };
+  const onFinish = () => {};
+
+  const onChanges = (value) => {
+    setProductVariant(value);
+  };
+
+  const onSearch = (value) => {
+    console.log("search:", value);
+  };
+
+  const getListProductVariant = async () => {
+    let data = await API.getListProductVariantForBill();
+    const listProductVariant = data.result;
+    setListProductVariant(listProductVariant);
+    console.log(listProductVariant);
+  };
+
+  useEffect(() => {
+    getListProductVariant();
+  }, []);
   return (
     <>
       <Row className="subject-default">
@@ -86,7 +112,7 @@ const Sales = () => {
                 <Row span={24} className="subject-filter">
                   <Col span={5}>
                     <Form.Item label="Tên môn học">
-                      <Input placeholder="Tên môn học" onChange={(e) => { }} />
+                      <Input placeholder="Tên môn học" onChange={(e) => {}} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -95,6 +121,24 @@ const Sales = () => {
           </Form>
         </Col>
         <Col span={24}>
+          <Select
+            showSearch
+            placeholder="Chọn sản phẩm để thêm vào hóa đơn"
+            optionFilterProp="children"
+            onChange={onChanges}
+            value={productVariant}
+            onSearch={onSearch}
+          >
+            {listProductVariant?.map((data) => {
+              return (
+                <Option key={data.variant_id} value={data.variant_id}>
+                  <div>
+                    <img src={data?.listimg[0]} height="70px"></img>
+                  </div>
+                </Option>
+              );
+            })}
+          </Select>
           <Row className="d-flex justify-content-space-between ">
             <Tabs
               type="editable-card"
@@ -150,7 +194,9 @@ const Sales = () => {
                         <SearchOutlined />
                       </div>
                       <div className="create-user">
-                        <PlusSquareOutlined onClick={() => setIsVisible(true)} />
+                        <PlusSquareOutlined
+                          onClick={() => setIsVisible(true)}
+                        />
                       </div>
                     </div>
                   </Form.Item>
@@ -168,8 +214,10 @@ const Sales = () => {
                       }}
                     />
                   </Form.Item>
-                  <Form.Item name="amount" label="Tổng tiền cần thanh toán">
-                  </Form.Item>
+                  <Form.Item
+                    name="amount"
+                    label="Tổng tiền cần thanh toán"
+                  ></Form.Item>
                   <Form.Item name="amount" label="Khách thanh toán">
                     <Input
                       style={{
@@ -199,13 +247,10 @@ const Sales = () => {
                 </Form>
               </Col>
             </Col>
-          </Row >
-        </Col >
-      </Row >
-      <SalesModal
-        setIsVisible={setIsVisible}
-        isVisible={isVisible}
-      />
+          </Row>
+        </Col>
+      </Row>
+      <SalesModal setIsVisible={setIsVisible} isVisible={isVisible} setCustomer={setCustomer}/>
     </>
   );
 };
