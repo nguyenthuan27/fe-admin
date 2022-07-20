@@ -6,9 +6,7 @@ const UserModal = (props) => {
     labelCol: { span: 5 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-
-  }
+  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {

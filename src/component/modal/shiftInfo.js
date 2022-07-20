@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, InputNumber, Modal, Radio, DatePicker, TimePicker } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Radio,
+  DatePicker,
+  TimePicker,
+} from "antd";
 const ShiftModal = (props) => {
   const { isVisible, setIsVisible } = props;
   const layout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 16 },
   };
-  const onFinish = () => {
-
-  }
+  const onFinish = () => {};
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -28,7 +35,7 @@ const ShiftModal = (props) => {
   const onOk = (value) => {
     console.log("onOk: ", value);
   };
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Modal
@@ -44,7 +51,6 @@ const ShiftModal = (props) => {
           onFinish={onFinish}
           validateMessages={validateMessages}
         >
-
           <Form.Item
             name={["shift", "id"]}
             label="Id"
@@ -74,12 +80,14 @@ const ShiftModal = (props) => {
             label="Day"
             rules={[{ required: true }]}
           >
-            <DatePicker picker="week"
+            <DatePicker
+              picker="week"
               onChange={onChange}
               onOk={onOk}
               style={{
-                width: '100%',
-              }} />
+                width: "100%",
+              }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -87,10 +95,13 @@ const ShiftModal = (props) => {
             label="Day name"
             rules={[{ required: true }]}
           >
-            <DatePicker onChange={onChange}
+            <DatePicker
+              onChange={onChange}
               style={{
-                width: '100%',
-              }} onOk={onOk} />
+                width: "100%",
+              }}
+              onOk={onOk}
+            />
           </Form.Item>
 
           <Form.Item
@@ -98,9 +109,11 @@ const ShiftModal = (props) => {
             label="Start time"
             rules={[{ required: true }]}
           >
-            <TimePicker style={{
-              width: '100%',
-            }} />
+            <TimePicker
+              style={{
+                width: "100%",
+              }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -108,9 +121,11 @@ const ShiftModal = (props) => {
             label="End time"
             rules={[{ required: true }]}
           >
-            <TimePicker style={{
-              width: '100%',
-            }} />
+            <TimePicker
+              style={{
+                width: "100%",
+              }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -118,9 +133,11 @@ const ShiftModal = (props) => {
             label="Break time start"
             rules={[{ required: true }]}
           >
-            <TimePicker style={{
-              width: '100%',
-            }} />
+            <TimePicker
+              style={{
+                width: "100%",
+              }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -128,9 +145,11 @@ const ShiftModal = (props) => {
             label="Break time end"
             rules={[{ required: true }]}
           >
-            <TimePicker style={{
-              width: '100%',
-            }} />
+            <TimePicker
+              style={{
+                width: "100%",
+              }}
+            />
           </Form.Item>
 
           <Form.Item name="radio-group" label="Status">
