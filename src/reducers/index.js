@@ -74,22 +74,6 @@ export default (
               icon: "bx bx-id-card",
             },
           },
-          {
-            name: "Report-Admin",
-            path: "/report-admin",
-            component: require("../pages/user/reportadmin").default,
-            meta: {
-              icon: "bx bxs-report",
-            },
-          },
-          {
-            name: "Report-Mod",
-            path: "/report-mod",
-            component: require("../pages/user/report-mod").default,
-            meta: {
-              icon: "bx bxs-report",
-            },
-          },
         ],
       },
       {
@@ -100,27 +84,11 @@ export default (
         },
         routes: [
           {
-            name: "Products",
-            path: "/products",
-            component: require("../pages/manage/products").default,
-            meta: {
-              icon: "bx bxs-file-plus",
-            },
-          },
-          {
             name: "Sales",
             path: "/sales",
             component: require("../pages/manage/sales").default,
             meta: {
               icon: "bx bxs-edit-alt",
-            },
-          },
-          {
-            name: "User",
-            path: "/user",
-            component: require("../pages/manage/user").default,
-            meta: {
-              icon: "bx bxs-user-rectangle",
             },
           },
         ],
