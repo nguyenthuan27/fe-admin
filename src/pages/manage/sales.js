@@ -22,6 +22,7 @@ const Sales = () => {
   const initialPanes = [
     { title: "Đơn hàng  1", content: "Content of Tab 1", key: "1" },
   ];
+
   const [activeKey, setActiveKey] = useState(initialPanes[0].key);
   const [panes, setPanes] = useState(initialPanes);
   const [listProductVariant, setListProductVariant] = useState();
@@ -79,7 +80,9 @@ const Sales = () => {
   };
   const [isVisible, setIsVisible] = useState(false);
 
-  const onFinish = () => {};
+  const onFinish = () => {
+    
+  };
 
   const onChanges = (value) => {
     setProductVariant(value);
@@ -94,6 +97,11 @@ const Sales = () => {
     const listProductVariant = data.result;
     setListProductVariant(listProductVariant);
     console.log(listProductVariant);
+  };
+
+  const createBillOff = async () => {
+    let data = await API.createBillOff();
+    const listProductVariant = data.result;
   };
 
   useEffect(() => {
@@ -189,7 +197,7 @@ const Sales = () => {
                         width: "calc(60%)",
                       }}
                     >
-                      <Input placeholder="input text above" />
+                      <Input placeholder="input text above" value={customer.fullName}/>
                       <div className="search">
                         <SearchOutlined />
                       </div>

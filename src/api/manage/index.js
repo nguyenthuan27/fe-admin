@@ -222,4 +222,19 @@ export default {
     });
     return res.data;
   },
+  createCusomer: async (data) => {
+    const res = await customAxios({
+      method: "post",
+      data: data,
+      url: `${serverEndpoint}/shoeswear/customer/create`,
+    });
+    return res.data;
+  },
+  createBillOff: async (staffId) => {
+    const res = await customAxios({
+      method: "get",
+      url: `${serverEndpoint}/shoeswear/bill/create-bill-off?staff-id=${staffId}`,
+    });
+    return res.data;
+  },
 };
