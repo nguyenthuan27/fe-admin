@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Col, Form, Collapse, Row, Table, Input, Button, Space, Select } from "antd";
+import {
+  Col,
+  Form,
+  Collapse,
+  Row,
+  Table,
+  Input,
+  Button,
+  Space,
+  Select,
+} from "antd";
 import { DeleteOutlined, EditTwoTone, EyeOutlined } from "@ant-design/icons";
 import "./staff.scss";
 import CreateStaff from "../../component/modal/staff/create";
@@ -11,47 +21,50 @@ const StaffManager = () => {
   const [isVisibleEdit, setIsVisibleEdit] = useState(false);
   const { Option } = Select;
   useEffect(() => {}, []);
-  const columns = [{
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-},
-{
-    title: 'User id',
-    dataIndex: 'user_id',
-    key: 'user_id',
-},
-{
-    title: 'Role',
-    dataIndex: 'role',
-    key: 'role',
-},
-
-
-{
-    title: 'Action',
-    key: 'action',
-    render: () => (
-        <Space size="middle">
-            <a onClick={() => setIsVisibleEdit(true)}>
-                <EditTwoTone />Edit
-            </a>
-            <a>
-                <DeleteOutlined />Delete</a>
-        </Space>
-    ),
-},
-];
-const data = [
+  const columns = [
     {
-        key: '1',
-        customer_id: 'John',
-        lastName: 'Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
     },
-];
+    {
+      title: "User id",
+      dataIndex: "user_id",
+      key: "user_id",
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      render: () => (
+        <Space size="middle">
+          <a onClick={() => setIsVisibleEdit(true)}>
+            <EditTwoTone />
+            Edit
+          </a>
+          <a>
+            <DeleteOutlined />
+            Delete
+          </a>
+        </Space>
+      ),
+    },
+  ];
+  const data = [
+    {
+      key: "1",
+      customer_id: "John",
+      lastName: "Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+      tags: ["nice", "developer"],
+    },
+  ];
 
   return (
     <>
@@ -78,21 +91,21 @@ const data = [
           </Form>
         </Col>
         <Col span={24} className="btn-create">
-                    <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
-                        Thêm mới
-                    </Button>
-                    <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
-                        <Select
-                            defaultValue="Sort filter"
-                            style={{
-                                width: 100,
-                            }}
-                        >
-                            <Option value="10">10</Option>
-                            <Option value="15">15</Option>
-                        </Select>
-                    </Col>
-                </Col>
+          <Button onClick={() => setIsVisibleCreate(true)} type="primary ">
+            Thêm mới
+          </Button>
+          <Col span={24} className="sort-filter" style={{ textAlign: "right" }}>
+            <Select
+              defaultValue="Sort filter"
+              style={{
+                width: 100,
+              }}
+            >
+              <Option value="10">10</Option>
+              <Option value="15">15</Option>
+            </Select>
+          </Col>
+        </Col>
 
         <Col span={24}>
           <Table
@@ -108,13 +121,10 @@ const data = [
         </Col>
       </Row>
       <CreateStaff
-                setIsVisible={setIsVisibleCreate}
-                isVisible={isVisibleCreate}
-            />
-            <EditStaff
-                isVisible={isVisibleEdit}
-                setIsVisible={setIsVisibleEdit}
-            />
+        setIsVisible={setIsVisibleCreate}
+        isVisible={isVisibleCreate}
+      />
+      <EditStaff isVisible={isVisibleEdit} setIsVisible={setIsVisibleEdit} />
     </>
   );
 };

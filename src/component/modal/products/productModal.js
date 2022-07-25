@@ -38,7 +38,6 @@ const ProductModal = (props) => {
       status: String(value.status) === "true" ? true : (value.status === undefined ? true : false),
       group_id: 3,
     };
-    console.log("data", data);
     if (isVisible.action === "create") {
       createOption(data);
     } else {

@@ -64,6 +64,7 @@ const BillModal = (props) => {
         address: value.address,
         receiver_name: value.customer_name,
         email: value.email,
+        ship_price: value.ship_price,
       },
       list_product_variant: listProduct,
     };
@@ -286,6 +287,14 @@ const BillModal = (props) => {
                 <Input disabled />
               </Form.Item>
               <Form.Item name="totalPrice" label="Tổng tiền">
+                <InputNumber
+                  disabled
+                  style={{
+                    width: "calc(100%)",
+                  }}
+                />
+              </Form.Item>
+              <Form.Item name="ship_price" label="Phí vận chuyển ">
                 <InputNumber
                   disabled
                   style={{

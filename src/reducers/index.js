@@ -138,7 +138,7 @@ export default (
       {
         name: "VoucherLog",
         path: "/voucherLog",
-        component: require("../pages/VoucherLog/voucherLog").default,
+        component: require("../pages/voucherLog/voucherLog").default,
         meta: {
           icon: "bx bxs-edit-alt",
         },
@@ -146,7 +146,7 @@ export default (
       {
         name: "Staff",
         path: "/staff",
-        component: require("../pages/Staff/staff").default,
+        component: require("../pages/staff/staff").default,
         meta: {
           icon: "bx bxs-edit-alt",
         },
