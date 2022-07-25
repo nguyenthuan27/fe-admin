@@ -9,7 +9,7 @@ import { createStore } from "redux";
 import reducers from "./reducers";
 import "./App.scss";
 import toast, { Toaster } from "react-hot-toast";
-import { Provider } from 'react-redux'
+import { Provider } from "react-redux";
 const { Header, Sider, Content } = Layout;
 const stores = createStore(reducers);
 const routes = stores.getState().base;
@@ -78,10 +78,10 @@ const App = (props) => {
         <Layout>
           <Header style={{ background: "#fff", padding: 0 }}>
             {/* <Icon
-            className={"trigger"}
-            type={collapsed ? "menu-unfold" : "menu-fold"}
-            onClick={() => setCollapsed(!collapsed)}
-          /> */}
+              className={"trigger"}
+              type={collapsed ? "menu-unfold" : "menu-fold"}
+              onClick={() => setCollapsed(!collapsed)}
+            /> */}
             <i
               class="bx bx-menu"
               style={{
